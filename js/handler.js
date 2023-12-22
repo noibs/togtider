@@ -53,12 +53,12 @@ navigator.geolocation.getCurrentPosition(position => {
             tripData.push({
                 origin: {
                     name: origin.getAttribute('name'),
-                    time: origin.getAttribute('time'),
+                    time: origin.getAttribute('rtTime') || origin.getAttribute('time'),
                     track: origin.getAttribute('track')
                 },
                 destination: {
                     name: destination.getAttribute('name'),
-                    time: destination.getAttribute('time'),
+                    time: destination.getAttribute('rtTime') || destination.getAttribute('time'),
                     track: destination.getAttribute('track')
                 }
             });
@@ -184,6 +184,10 @@ function deleteElements() {
     elements.forEach(element => {
         element.remove();
     });
+}
+
+if (window.navigator.standalone) {
+    document.body.classList.add('apple-mobile-web-app');
 }
 
 /*function refreshData() {

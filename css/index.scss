@@ -18,7 +18,8 @@
 
     .container {
         padding: 0vh auto;
-        padding-top: 0vh !important;
+        height: 100%;
+        //padding-top: 0vh !important;
     }
 
     .tripsContainer {
@@ -205,5 +206,10 @@ i {
 
 .track {
     margin: 0 0 auto;
+}
+
+
+.apple-mobile-web-app .container {
+    margin-top: 5vh !important;
 }
 
