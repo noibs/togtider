@@ -19,7 +19,7 @@
     .container {
         padding: 0vh auto;
         height: 100%;
-        //padding-top: 0vh !important;
+        padding-top: 0 !important;
     }
 
     .tripsContainer {
@@ -170,7 +170,7 @@ h1 {
 
         &:hover {
             background-color: #2a5fb5;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
             transform: scale(1.1);
         }
 
@@ -210,6 +210,10 @@ i {
 
 
 .apple-mobile-web-app .container {
-    margin-top: 5vh !important;
+    padding-top: auto !important;
+}
+
+.transparent {
+    opacity: 0%;
 }
 

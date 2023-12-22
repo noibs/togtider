@@ -120,7 +120,7 @@ function getData() {
 
                 const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
                 const tripElement = `
-                <div class="${tripClass} trip ${index + 1}">
+                <div id="trips" class="${tripClass} trip ${index + 1}">
                     <div class="title_time">
                         <h2>${origin.getAttribute('name').slice(0, -1)}:</h2>
                         <h2 id="title_time">${origin.getAttribute('time')}</h2>
@@ -160,7 +160,7 @@ refreshButton.addEventListener('click', function() {
         
         this.removeAttribute('disabled');
         isRefreshing = false;
-    }, 5000);
+    }, 3000);
 });
 
 function getDistance(location1, location2) {
