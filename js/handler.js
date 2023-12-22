@@ -1,7 +1,19 @@
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Replace with actual coordinates
-const borup = { lat: 55.4722, lon: 11.8617 }; // Replace with actual coordinates
+const borup = { lat: 55.4959, lon: 11.9778 }; // Replace with actual coordinates
 
 const container = document.getElementById('tripsContainer');
+
+// Get current date and time
+let now = new Date();
+
+// Subtract 15 minutes
+now.setMinutes(now.getMinutes() - 10);
+
+// Format time to HH:MM
+let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+console.log(time);
+
 
 // Get the user's current location
 let originId, destId;
@@ -24,7 +36,7 @@ navigator.geolocation.getCurrentPosition(position => {
 
     
 
-    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0`)
+    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
     .then(response => response.text())
     .then(data => {
         let parser = new DOMParser();
@@ -91,7 +103,7 @@ function getData() {
     //container.innerHTML = '';
     //refresh();
     // Fetch the new data
-    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=2000`)
+    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();

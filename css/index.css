@@ -7,6 +7,12 @@
     font-size: 0.7em;
     overflow: hidden;
   }
+  .title i {
+    font-size: 2em !important;
+  }
+  h1, i {
+    margin: auto 1vw;
+  }
   .container {
     padding: 0vh auto;
     padding-top: 0vh !important;
@@ -31,7 +37,7 @@
     visibility: hidden !important;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   body {
     display: flex;
     justify-content: center;
@@ -39,6 +45,13 @@
     min-height: 100vh;
     margin: 0;
     overflow: hidden;
+  }
+  .title i {
+    margin-bottom: 2vh !important;
+  }
+  h1 {
+    font-size: 3em !important;
+    margin-bottom: 1vh !important;
   }
   /*.container {
       width: 100%;
@@ -50,6 +63,19 @@
     display: inline-block;
   }
 }
+.title {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.title h1, .title i {
+  margin: auto 1vh;
+}
+.title i {
+  color: #3b82f6;
+  font-size: 2.5em;
+}
+
 h1 {
   margin: 0;
 }

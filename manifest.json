@@ -1,0 +1,21 @@
+{
+    "short_name": "Togtider",
+    "name": "Togtider",
+    "icons": [
+      {
+        "src": "/media/apple/192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/media/apple/512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#3367D6",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#3367D6"
+  }

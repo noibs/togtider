@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Trips Dashboard</title>
+    <title>Togtider</title>
     <link rel="stylesheet" href="./css/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#3367D6">
+    <meta name="apple-mobile-web-app-title" content="Togtider">
+    <link rel="icon" href="media/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
     <script src="https://kit.fontawesome.com/5b810e0f7d.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Togtider</h1>
+        <div class="title">
+            <i class="fa-solid fa-train-subway"></i>
+            <h1>Togtider</h1>
+        </div>
+        
         <div id="tripsContainer" class="tripsContainer"></div>
         <div class="trip-desktop trip ${index + 1} delete">
             <div class="title_time">
