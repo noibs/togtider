@@ -4,7 +4,7 @@
 
 @media (max-width: 768px) {
     body {
-        font-size: .8em;
+        font-size: .7em;
         overflow: hidden;
     }
 
@@ -210,6 +210,8 @@ i {
 
 
 .apple-mobile-web-app {
+    font-size: .7em !important;
+
     button {
         margin-top: 4vh !important;
         width: 25vw !important;
