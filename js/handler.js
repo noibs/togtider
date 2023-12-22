@@ -99,10 +99,16 @@ navigator.geolocation.getCurrentPosition(position => {
 
 
 function getData() {
-    // Clear the existing data
-    //container.innerHTML = '';
-    //refresh();
-    // Fetch the new data
+    // Get current date and time
+    let now = new Date();
+
+    // Subtract 10 minutes
+    now.setMinutes(now.getMinutes() - 10);
+
+    // Format time to HH:MM
+    let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+    console.log(time);
     fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {

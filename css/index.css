@@ -4,7 +4,7 @@
 
 @media (max-width: 768px) {
   body {
-    font-size: 0.7em;
+    font-size: 0.8em;
     overflow: hidden;
   }
   .title i {
@@ -32,7 +32,7 @@
     width: 25vw !important;
   }
   .track {
-    font-size: 1.2em !important;
+    font-size: 1.3em !important;
   }
   .delete {
     visibility: hidden !important;
@@ -181,6 +181,11 @@ i {
 
 .apple-mobile-web-app .container {
   padding-top: 4vh !important;
+}
+.apple-mobile-web-app button {
+  margin-top: 4vh !important;
+  width: 25vw !important;
+  transform: scale(1.5) !important;
 }
 
 .transparent {
