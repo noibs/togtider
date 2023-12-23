@@ -43,6 +43,10 @@
   .fa-clock {
     font-size: 1.1em !important;
   }
+  .tooltip-container .delay-indicator {
+    margin: auto;
+    visibility: visible !important;
+  }
 }
 @media (min-width: 769px) {
   body {
@@ -243,4 +247,9 @@ i {
 .transparent ~ .tooltip-text {
   visibility: hidden !important;
   opacity: 0 !important;
+}
+
+.delay-indicator {
+  margin: auto;
+  visibility: hidden !important;
 }/*# sourceMappingURL=index.css.map */

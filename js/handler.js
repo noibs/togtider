@@ -84,6 +84,7 @@ navigator.geolocation.getCurrentPosition(position => {
             <div class="title_time">
                 <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
                 <span class="tooltip-container">
+                    <span class="delay-indicator ${originDelayClass}">+${(trip.origin.delayText && trip.origin.delayText.match(/\d+/g).join('')) || ''}</span>
                     <i class="fa-regular fa-clock ${originDelayClass}"></i>
                     <span class="tooltip-text">${trip.origin.delayText}</span>
                     <h2 id="title_time">${trip.origin.time}</h2>
@@ -94,6 +95,7 @@ navigator.geolocation.getCurrentPosition(position => {
             <div class="title_time">
                 <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
                 <span class="tooltip-container">
+                    <span class="delay-indicator ${destinationDelayClass}">+${(trip.destination.delayText && trip.destination.delayText.match(/\d+/g).join('')) || ''}</span>
                     <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
                     <span class="tooltip-text">${trip.destination.delayText}</span>
                     <h2 id="title_time">${trip.destination.time}</h2>
@@ -102,7 +104,6 @@ navigator.geolocation.getCurrentPosition(position => {
             <p class="track">Spor: ${trip.destination.track}</p>
         </div>
                 `;
-
                 removePlaceholder()
                 deleteElements();
                 animateTime();
@@ -117,7 +118,7 @@ navigator.geolocation.getCurrentPosition(position => {
         let timeDate = new Date(`1970-01-01T${time}:00`);
         let delay = (rtTimeDate - timeDate) / 60000; // Convert milliseconds to minutes
         let delayText = delay === 1 ? `Forsinket:<br> ${delay} minut` : `Forsinket:<br> ${delay} minutter`;
-        return delayText;
+        return { delayText, delay };
         
     }
 
@@ -160,6 +161,7 @@ function getData() {
                     <div class="title_time">
                         <h2 class="station">${origin.getAttribute('name').slice(0, -1)}:</h2>
                         <span class="tooltip-container">
+                            <span class="delay-indicator ${originDelayClass}">+${(originDelayText && originDelayText.match(/\d+/g).join('')) || ''}</span>
                             <i class="fa-regular fa-clock ${originDelayClass}"></i>
                             <span class="tooltip-text">${originDelayText}</span>
                             <h2 id="title_time">${origin.getAttribute('rtTime') || origin.getAttribute('time')}</h2>
@@ -172,6 +174,7 @@ function getData() {
                     <div class="title_time">
                         <h2 class="station">${destination.getAttribute('name').slice(0, -1)}:</h2>
                         <span class="tooltip-container">
+                            <span class="delay-indicator ${destinationDelayClass}">+${(destinationDelayText && destinationDelayText.match(/\d+/g).join('')) || ''}</span>
                             <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
                             <span class="tooltip-text">${destinationDelayText}</span>
                             <h2 id="title_time">${destination.getAttribute('rtTime') || destination.getAttribute('time')}</h2>
@@ -187,28 +190,6 @@ function getData() {
         })
         .catch(error => console.error('Error:', error));
 }
-
-// Get all tooltip containers
-const tooltipContainers = document.querySelectorAll('.tooltip-container');
-
-// Apply the appropriate event listener to each tooltip container
-tooltipContainers.forEach(container => {
-    // If the screen width is less than or equal to 768px, consider it as a mobile device
-    if (window.innerWidth <= 768) {
-        // On mobile devices, show the tooltip when the container is clicked
-        container.addEventListener('click', function() {
-            const tooltipText = this.querySelector('.tooltip-text');
-            tooltipText.style.visibility = 'visible !important';
-            tooltipText.style.opacity = '1 !important';
-
-            // Hide the tooltip after 3 seconds
-            setTimeout(() => {
-                tooltipText.style.visibility = 'hidden !important';
-                tooltipText.style.opacity = '0 !important';
-            }, 3000);
-        });
-    }
-});
 
 const refreshButton = document.querySelector('.refresh');
 
