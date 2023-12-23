@@ -194,13 +194,13 @@ i {
   font-size: 0.7em !important;
 }
 .apple-mobile-web-app button {
-  margin-top: 2vh !important;
+  margin-top: 4vh !important;
   width: 25vw !important;
   transform: scale(1.5) !important;
 }
 .apple-mobile-web-app .title {
   font-size: 1.5em !important;
-  margin-top: 5vh !important;
+  margin-top: 2vh !important;
 }
 
 .transparent {
