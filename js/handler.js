@@ -54,12 +54,14 @@ navigator.geolocation.getCurrentPosition(position => {
                 origin: {
                     name: origin.getAttribute('name'),
                     time: origin.getAttribute('rtTime') || origin.getAttribute('time'),
-                    track: origin.getAttribute('track')
+                    track: origin.getAttribute('rtTrack') || origin.getAttribute('track'),
+                    delayed: origin.getAttribute('rtTime') !== null
                 },
                 destination: {
                     name: destination.getAttribute('name'),
                     time: destination.getAttribute('rtTime') || destination.getAttribute('time'),
-                    track: destination.getAttribute('track')
+                    track: destination.getAttribute('rtTrack') || destination.getAttribute('track'),
+                    delayed: origin.getAttribute('rtTime') !== null
                 }
             });
         }
@@ -67,17 +69,24 @@ navigator.geolocation.getCurrentPosition(position => {
     container.innerHTML = '';
     tripData.forEach((trip, index) => {
         const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
+        const delayClass = trip.origin.delayed ? '' : 'transparent';
         const tripElement = `
             <div class="${tripClass} trip ${index + 1}">
                 <div class="title_time">
-                    <h2>${trip.origin.name.slice(0, -1)}:</h2>
-                    <h2 id="title_time">${trip.origin.time}</h2>
+                    <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
+                    <span>
+                        <i class="fa-regular fa-clock ${delayClass}"></i>
+                        <h2 id="title_time">${trip.origin.time}</h2>
+                    </span>
                 </div>
                 <p class="track">Spor: ${trip.origin.track}</p>
                 <i class="fa-solid fa-angles-down"></i>
                 <div class="title_time">
-                    <h2>${trip.destination.name.slice(0, -1)}:</h2>
-                    <h2 id="title_time">${trip.destination.time}</h2>
+                    <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
+                    <span>
+                        <i class="fa-regular fa-clock ${delayClass}"></i>
+                        <h2 id="title_time">${trip.destination.time}</h2>
+                    </span>
                 </div>
                 <p class="track">Spor: ${trip.destination.track}</p>
             </div>
@@ -123,26 +132,33 @@ function getData() {
             trips.forEach((trip, index) => {
                 const origin = trip.getElementsByTagName('Origin')[0];
                 const destination = trip.getElementsByTagName('Destination')[0];
-
+                
                 const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
+                const originDelayClass = origin.getAttribute('rtTime') ? '' : 'transparent';
+                const destinationDelayClass = destination.getAttribute('rtTime') ? '' : 'transparent';
                 const tripElement = `
                 <div id="trips" class="${tripClass} trip ${index + 1}">
                     <div class="title_time">
-                        <h2>${origin.getAttribute('name').slice(0, -1)}:</h2>
-                        <h2 id="title_time">${origin.getAttribute('rtTime') || origin.getAttribute('time')}</h2>
+                        <h2 class="station">${origin.getAttribute('name').slice(0, -1)}:</h2>
+                        <span>
+                            <i class="fa-regular fa-clock ${originDelayClass}"></i>
+                            <h2 id="title_time">${origin.getAttribute('rtTime') || origin.getAttribute('time')}</h2>
+                        </span>
                     </div>
                     <p class="track">Spor: ${origin.getAttribute('track')}</p>
                     <i class="fa-solid fa-angles-down"></i>
                     <div class="title_time">
-                        <h2>${destination.getAttribute('name').slice(0, -1)}:</h2>
-                        <h2 id="title_time">${destination.getAttribute('rtTime') || destination.getAttribute('time')}</h2>
+                        <h2 class="station">${destination.getAttribute('name').slice(0, -1)}:</h2>
+                        <span>
+                            <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
+                            <h2 id="title_time">${destination.getAttribute('rtTime') || destination.getAttribute('time')}</h2>
+                        </span>
                     </div>
                     <p class="track">Spor: ${destination.getAttribute('track')}</p>
                 </div>
-    `;
-
-    newContent += tripElement;
-});
+                `;
+                newContent += tripElement;
+            });
 
 container.innerHTML = newContent;
         })

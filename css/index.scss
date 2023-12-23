@@ -184,11 +184,27 @@ h1 {
 
 .trip {
 
-    h2 {
-        margin: 0;
+    .station {
+        padding-top: 0 !important;
+        margin: 0 !important;
+
+    }
+
+    span {
+        display: flex;
+        justify-content: center;
+
+        i {
+            font-size: 1em;
+            margin: auto .5vh !important;
+        }
+
     }
     #title_time {
         font-weight: 500;
+        padding-top: 0 !important;
+        margin: 0 !important;
+
     }
 }
 
@@ -216,6 +232,11 @@ i {
         margin-top: 4vh !important;
         width: 25vw !important;
         transform: scale(1.5) !important;
+    }
+
+    .title {
+        font-size: 1.5em !important;
+        margin-top: 5vh !important;
     }
 }
 

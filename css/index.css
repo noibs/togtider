@@ -156,11 +156,22 @@ h1 {
   margin: auto;
 }
 
-.trip h2 {
-  margin: 0;
+.trip .station {
+  padding-top: 0 !important;
+  margin: 0 !important;
+}
+.trip span {
+  display: flex;
+  justify-content: center;
+}
+.trip span i {
+  font-size: 1em;
+  margin: auto 0.5vh !important;
 }
 .trip #title_time {
   font-weight: 500;
+  padding-top: 0 !important;
+  margin: 0 !important;
 }
 
 .title_time {
@@ -186,6 +197,10 @@ i {
   margin-top: 4vh !important;
   width: 25vw !important;
   transform: scale(1.5) !important;
+}
+.apple-mobile-web-app .title {
+  font-size: 1.5em !important;
+  margin-top: 5vh !important;
 }
 
 .transparent {
