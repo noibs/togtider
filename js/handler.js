@@ -164,10 +164,11 @@ function getData() {
                             <span class="tooltip-text">${originDelayText}</span>
                             <h2 id="title_time">${origin.getAttribute('rtTime') || origin.getAttribute('time')}</h2>
                         </span>
-                        
                     </div>
-                    <p class="track">Spor: ${origin.getAttribute('track')}</p>
+                    <p class="track">Spor: ${origin.getAttribute('rtTrack') || origin.getAttribute('track')}</p>
+
                     <i class="fa-solid fa-angles-down"></i>
+
                     <div class="title_time">
                         <h2 class="station">${destination.getAttribute('name').slice(0, -1)}:</h2>
                         <span class="tooltip-container">
@@ -175,9 +176,8 @@ function getData() {
                             <span class="tooltip-text">${destinationDelayText}</span>
                             <h2 id="title_time">${destination.getAttribute('rtTime') || destination.getAttribute('time')}</h2>
                         </span>
-                        
                     </div>
-                    <p class="track">Spor: ${destination.getAttribute('track')}</p>
+                    <p class="track">Spor: ${destination.getAttribute('rtTrack') || destination.getAttribute('track')}</p>
                 </div>
                 `;
                 newContent += tripElement;
