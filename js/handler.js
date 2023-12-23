@@ -129,13 +129,13 @@ function getData() {
                 <div id="trips" class="${tripClass} trip ${index + 1}">
                     <div class="title_time">
                         <h2>${origin.getAttribute('name').slice(0, -1)}:</h2>
-                        <h2 id="title_time">${origin.getAttribute('time')}</h2>
+                        <h2 id="title_time">${origin.getAttribute('rtTime') || origin.getAttribute('time')}</h2>
                     </div>
                     <p class="track">Spor: ${origin.getAttribute('track')}</p>
                     <i class="fa-solid fa-angles-down"></i>
                     <div class="title_time">
                         <h2>${destination.getAttribute('name').slice(0, -1)}:</h2>
-                        <h2 id="title_time">${destination.getAttribute('time')}</h2>
+                        <h2 id="title_time">${destination.getAttribute('rtTime') || destination.getAttribute('time')}</h2>
                     </div>
                     <p class="track">Spor: ${destination.getAttribute('track')}</p>
                 </div>
