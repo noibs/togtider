@@ -188,27 +188,26 @@ function getData() {
         .catch(error => console.error('Error:', error));
 }
 
-// Detect whether the user is on a mobile device
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
 // Get all tooltip containers
 const tooltipContainers = document.querySelectorAll('.tooltip-container');
 
 // Apply the appropriate event listener to each tooltip container
 tooltipContainers.forEach(container => {
-    if (isMobile) {
+    // If the screen width is less than or equal to 768px, consider it as a mobile device
+    if (window.innerWidth <= 768) {
         // On mobile devices, show the tooltip when the container is clicked
         container.addEventListener('click', function() {
             const tooltipText = this.querySelector('.tooltip-text');
             tooltipText.style.visibility = 'visible !important';
             tooltipText.style.opacity = '1 !important';
 
+            // Hide the tooltip after 3 seconds
             setTimeout(() => {
                 tooltipText.style.visibility = 'hidden !important';
                 tooltipText.style.opacity = '0 !important';
-            }, 5000);
+            }, 3000);
         });
-    } 
+    }
 });
 
 const refreshButton = document.querySelector('.refresh');
