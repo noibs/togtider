@@ -200,12 +200,12 @@ tooltipContainers.forEach(container => {
         // On mobile devices, show the tooltip when the container is clicked
         container.addEventListener('click', function() {
             const tooltipText = this.querySelector('.tooltip-text');
-            tooltipText.style.visibility = 'visible';
-            tooltipText.style.opacity = '1';
+            tooltipText.style.visibility = 'visible !important';
+            tooltipText.style.opacity = '1 !important';
 
             setTimeout(() => {
-                tooltipText.style.visibility = 'hidden';
-                tooltipText.style.opacity = '0';
+                tooltipText.style.visibility = 'hidden !important';
+                tooltipText.style.opacity = '0 !important';
             }, 5000);
         });
     } 
