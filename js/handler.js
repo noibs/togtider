@@ -7,7 +7,7 @@ const container = document.getElementById('tripsContainer');
 let now = new Date();
 
 // Subtract 15 minutes
-now.setMinutes(now.getMinutes() - 10);
+now.setMinutes(now.getMinutes() - 15);
 
 // Format time to HH:MM
 let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
@@ -50,69 +50,84 @@ navigator.geolocation.getCurrentPosition(position => {
             let origin = trip.getElementsByTagName('Origin')[0];
             let destination = trip.getElementsByTagName('Destination')[0];
 
+            let originTime = origin.getAttribute('rtTime') || origin.getAttribute('time');
+            let destinationTime = destination.getAttribute('rtTime') || destination.getAttribute('time');
+
+            let originDelayText = origin.getAttribute('rtTime') ? getDelay(origin.getAttribute('rtTime'), origin.getAttribute('time')) : '';
+            let destinationDelayText = destination.getAttribute('rtTime') ? getDelay(destination.getAttribute('rtTime'), destination.getAttribute('time')) : '';
+
             tripData.push({
                 origin: {
                     name: origin.getAttribute('name'),
-                    time: origin.getAttribute('rtTime') || origin.getAttribute('time'),
+                    time: originTime,
                     track: origin.getAttribute('rtTrack') || origin.getAttribute('track'),
-                    delayed: origin.getAttribute('rtTime') !== null
+                    delayed: origin.getAttribute('rtTime') !== null,
+                    delayText: originDelayText
                 },
                 destination: {
                     name: destination.getAttribute('name'),
-                    time: destination.getAttribute('rtTime') || destination.getAttribute('time'),
+                    time: destinationTime,
                     track: destination.getAttribute('rtTrack') || destination.getAttribute('track'),
-                    delayed: origin.getAttribute('rtTime') !== null
+                    delayed: destination.getAttribute('rtTime') !== null,
+                    delayText: destinationDelayText
                 }
             });
         }
-    
-    container.innerHTML = '';
-    tripData.forEach((trip, index) => {
-        const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
-        const delayClass = trip.origin.delayed ? '' : 'transparent';
-        const tripElement = `
-            <div class="${tripClass} trip ${index + 1}">
-                <div class="title_time">
-                    <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
-                    <span>
-                        <i class="fa-regular fa-clock ${delayClass}"></i>
-                        <h2 id="title_time">${trip.origin.time}</h2>
-                    </span>
-                </div>
-                <p class="track">Spor: ${trip.origin.track}</p>
-                <i class="fa-solid fa-angles-down"></i>
-                <div class="title_time">
-                    <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
-                    <span>
-                        <i class="fa-regular fa-clock ${delayClass}"></i>
-                        <h2 id="title_time">${trip.destination.time}</h2>
-                    </span>
-                </div>
-                <p class="track">Spor: ${trip.destination.track}</p>
+
+            container.innerHTML = '';
+            tripData.forEach((trip, index) => {
+                const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
+                const originDelayClass = trip.origin.delayed ? '' : 'transparent';
+                const destinationDelayClass = trip.destination.delayed ? '' : 'transparent';
+                const tripElement = `
+                <div class="${tripClass} trip ${index + 1}">
+            <div class="title_time">
+                <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
+                <span class="tooltip-container">
+                    <i class="fa-regular fa-clock ${originDelayClass}"></i>
+                    <span class="tooltip-text">${trip.origin.delayText}</span>
+                    <h2 id="title_time">${trip.origin.time}</h2>
+                </span>
             </div>
-        `;
+            <p class="track">Spor: ${trip.origin.track}</p>
+            <i class="fa-solid fa-angles-down"></i>
+            <div class="title_time">
+                <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
+                <span class="tooltip-container">
+                    <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
+                    <span class="tooltip-text">${trip.destination.delayText}</span>
+                    <h2 id="title_time">${trip.destination.time}</h2>
+                </span>
+            </div>
+            <p class="track">Spor: ${trip.destination.track}</p>
+        </div>
+                `;
 
-        //newContent += tripElement;
-        removePlaceholder()
-        deleteElements();
-        animateTime();
-        container.innerHTML += tripElement;
+                removePlaceholder()
+                deleteElements();
+                animateTime();
+                container.innerHTML += tripElement;
+            });
+        })
+        .catch(error => console.error('Error:', error));
     });
-    //container.innerHTML = newContent;
 
-    
-})
-
-.catch(error => console.error('Error:', error));
-});
+    function getDelay(rtTime, time) {
+        let rtTimeDate = new Date(`1970-01-01T${rtTime}:00`);
+        let timeDate = new Date(`1970-01-01T${time}:00`);
+        let delay = (rtTimeDate - timeDate) / 60000; // Convert milliseconds to minutes
+        let delayText = delay === 1 ? `Forsinket:<br> ${delay} minut` : `Forsinket:<br> ${delay} minutter`;
+        return delayText;
+        
+    }
 
 
 function getData() {
     // Get current date and time
     let now = new Date();
 
-    // Subtract 10 minutes
-    now.setMinutes(now.getMinutes() - 10);
+    // Subtract 15 minutes
+    now.setMinutes(now.getMinutes() - 15);
 
     // Format time to HH:MM
     let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
@@ -128,6 +143,7 @@ function getData() {
             const trips = Array.from(xmlDoc.getElementsByTagName('Trip'));
 
             // Process each trip
+            // Process each trip
             let newContent = '';
             trips.forEach((trip, index) => {
                 const origin = trip.getElementsByTagName('Origin')[0];
@@ -136,23 +152,30 @@ function getData() {
                 const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
                 const originDelayClass = origin.getAttribute('rtTime') ? '' : 'transparent';
                 const destinationDelayClass = destination.getAttribute('rtTime') ? '' : 'transparent';
+                const originDelayText = origin.getAttribute('rtTime') ? getDelay(origin.getAttribute('rtTime'), origin.getAttribute('time')) : '';
+                const destinationDelayText = destination.getAttribute('rtTime') ? getDelay(destination.getAttribute('rtTime'), destination.getAttribute('time')) : '';
+
                 const tripElement = `
                 <div id="trips" class="${tripClass} trip ${index + 1}">
                     <div class="title_time">
                         <h2 class="station">${origin.getAttribute('name').slice(0, -1)}:</h2>
-                        <span>
+                        <span class="tooltip-container">
                             <i class="fa-regular fa-clock ${originDelayClass}"></i>
+                            <span class="tooltip-text">${originDelayText}</span>
                             <h2 id="title_time">${origin.getAttribute('rtTime') || origin.getAttribute('time')}</h2>
                         </span>
+                        
                     </div>
                     <p class="track">Spor: ${origin.getAttribute('track')}</p>
                     <i class="fa-solid fa-angles-down"></i>
                     <div class="title_time">
                         <h2 class="station">${destination.getAttribute('name').slice(0, -1)}:</h2>
-                        <span>
+                        <span class="tooltip-container">
                             <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
+                            <span class="tooltip-text">${destinationDelayText}</span>
                             <h2 id="title_time">${destination.getAttribute('rtTime') || destination.getAttribute('time')}</h2>
                         </span>
+                        
                     </div>
                     <p class="track">Spor: ${destination.getAttribute('track')}</p>
                 </div>
@@ -160,7 +183,7 @@ function getData() {
                 newContent += tripElement;
             });
 
-container.innerHTML = newContent;
+            container.innerHTML = newContent;
         })
         .catch(error => console.error('Error:', error));
 }

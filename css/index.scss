@@ -45,6 +45,14 @@
     .delete {
         visibility: hidden !important;
     }
+
+    .tooltip-text {
+        font-size: 1.3em !important;
+    }
+
+    .fa-clock {
+        font-size: 1.1em !important;
+    }
 }
 
 @media (min-width: 769px) {
@@ -242,5 +250,39 @@ i {
 
 .transparent {
     opacity: 0%;
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    position: absolute;
+    z-index: 2;
+    bottom: 125%; /* Position the tooltip above the icon */
+    left: 50%;
+    margin-left: -60px; /* Use half the width to center the tooltip */
+
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: .7;
+}
+
+.transparent ~ .tooltip-text {
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
