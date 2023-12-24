@@ -42,6 +42,7 @@
   }
   .fa-clock {
     font-size: 1.1em !important;
+    margin: 0.5vh 0.5vh !important;
   }
   .tooltip-container .delay-indicator {
     margin: auto;
@@ -176,7 +177,7 @@ h1 {
 }
 .trip span i {
   font-size: 1em;
-  margin: auto 0.5vh !important;
+  margin: auto 0.5vh;
 }
 .trip #title_time {
   font-weight: 500;
