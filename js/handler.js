@@ -1,18 +1,18 @@
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Replace with actual coordinates
 const borup = { lat: 55.4959, lon: 11.9778 }; // Replace with actual coordinates
 
+const subtractedMinutes = 15; // Subtract 15 minutes from current time
+
 const container = document.getElementById('tripsContainer');
 
 // Get current date and time
 let now = new Date();
 
 // Subtract 15 minutes
-now.setMinutes(now.getMinutes() - 15);
+now.setMinutes(now.getMinutes() - subtractedMinutes);
 
 // Format time to HH:MM
 let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-
-console.log(time);
 
 
 // Get the user's current location
@@ -129,12 +129,12 @@ function getData() {
     let now = new Date();
 
     // Subtract 15 minutes
-    now.setMinutes(now.getMinutes() - 15);
+    now.setMinutes(now.getMinutes() - subtractedMinutes);
 
     // Format time to HH:MM
     let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
-    console.log(time);
+    console.log(ntime);
     fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
@@ -238,8 +238,3 @@ function deleteElements() {
 if (window.navigator.standalone) {
     document.body.classList.add('apple-mobile-web-app');
 }
-
-/*function refreshData() {
-    refresh();
-    setTimeout(getData, 100);
-}*/
