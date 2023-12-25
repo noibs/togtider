@@ -202,7 +202,6 @@ function getData() {
 
 // Finds refresh button and adds event listener to it
 const refreshButton = document.querySelector('.refresh');
-
 let isRefreshing = false;
 
 refreshButton.addEventListener('click', function() {
@@ -218,6 +217,24 @@ refreshButton.addEventListener('click', function() {
         this.removeAttribute('disabled');
         isRefreshing = false;
     }, 3000);
+});
+
+// Changes theme wit delay
+const themeButton = document.querySelector('.fa-train-subway');
+let isChanging = false;
+
+themeButton.addEventListener('click', function() {
+    if (isChanging) return;
+    isChanging = true;
+    this.setAttribute('disabled', 'disabled');
+
+    changeTheme();
+
+    setTimeout(() => {
+        
+        this.removeAttribute('disabled');
+        isChanging = false;
+    }, 2000);
 });
 
 // Calculates the distance between two stations
@@ -243,6 +260,21 @@ function deleteElements() {
     elements.forEach(element => {
         element.remove();
     });
+}
+
+// Toggle darkmode
+function changeTheme() {
+    var element = document.body;
+    element.classList.toggle("darkmode");
+    localStorage.setItem('theme', element.classList.contains("darkmode") ? "darkmode" : "lightmode");
+}
+
+window.onload = function() {
+    var savedTheme = localStorage.getItem('theme') || "lightmode";
+    document.body.style.transition = "none";  // Temporarily disable transitions
+    document.body.classList.add(savedTheme);
+    window.getComputedStyle(document.body).getPropertyValue('background-color');  // Trigger a reflow
+    document.body.style.transition = "";  // Re-enable transitions
 }
 
 // Applies special CSS class if the website is added to the home screen on iOS

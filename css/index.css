@@ -55,11 +55,13 @@
 @media (min-width: 769px) {
   body {
     display: flex;
+    background-color: white !important;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
     overflow: hidden;
+    transition: all 0.5s ease;
   }
   .title i {
     margin-bottom: 2vh !important;
@@ -83,6 +85,10 @@
 .title i {
   color: #3b82f6;
   font-size: 2.5em;
+  transition: all 0.2s ease-in-out;
+}
+.title i:hover {
+  transform: scale(1.1);
 }
 
 h1 {
@@ -91,7 +97,7 @@ h1 {
 
 .container {
   position: relative;
-  background-color: white;
+  background-color: transparent;
   padding: 6vh 8vh;
   z-index: 1;
   margin: 2vh;
@@ -250,4 +256,24 @@ i {
 .delay-indicator {
   margin: auto;
   visibility: hidden !important;
+}
+
+.darkmode {
+  background-color: #1e1e22 !important;
+}
+.darkmode .trip {
+  background-color: #242429 !important;
+  border: 1px solid #303035 !important;
+}
+.darkmode .trip:hover {
+  box-shadow: 0 0 25px rgba(169, 169, 169, 0.05) !important;
+}
+.darkmode h1, .darkmode h2, .darkmode p, .darkmode span, .darkmode .fa-angles-down {
+  color: white !important;
+}
+.darkmode button {
+  border: 2px solid #303035 !important;
+}
+.darkmode button:hover {
+  box-shadow: 0 0 50px rgba(169, 169, 169, 0.05) !important;
 }/*# sourceMappingURL=index.css.map */
