@@ -134,7 +134,7 @@ function getData() {
     // Format time to HH:MM
     let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
-    console.log(ntime);
+    console.log(time);
     fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
