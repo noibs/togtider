@@ -65,12 +65,6 @@
     font-size: 3em !important;
     margin-bottom: 1vh !important;
   }
-  /*.container {
-      width: 100%;
-      max-width: 1000px;
-      padding: 0vh 0;
-      padding-top: 0vh !important;
-  }*/
   .delete {
     display: inline-block;
   }
@@ -159,7 +153,7 @@ h1 {
   z-index: 0;
 }
 .refresh button:hover {
-  background-color: #2a5fb5;
+  background-color: #0b63f3;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
   transform: scale(1.1);
 }

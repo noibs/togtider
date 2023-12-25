@@ -1,9 +1,11 @@
+// Prepares container for animation
 anime({
     targets: '.container',
     opacity: ['1%', '0%'],
     duration: 1,
 })
 
+// Animates main container
 anime({
     targets: '.container',
     opacity: ['0%', '100%'],
@@ -13,13 +15,7 @@ anime({
     easing: 'spring(1, 80, 15, 5)'
 })
 
-/*anime({
-    targets: '.trip',
-    scale: ['0%', '100%'],
-    duration: 300,
-    delay: 100,
-})*/
-
+// Title animation
 anime({
     targets: 'h1',
     skew: ['-40deg', '0deg'],
@@ -28,6 +24,7 @@ anime({
     easing: 'spring(1, 80, 15, 5)'
 })
 
+// Refresh button loading animation
 anime({
     targets: '.refresh',
     scale: ['0%', '100%'],
@@ -35,6 +32,7 @@ anime({
     duration: 1000,
 })
 
+// Removes placeholders smoothly
 function removePlaceholder() {
     anime({
         targets: '.delete',
@@ -45,6 +43,7 @@ function removePlaceholder() {
     })
 }
 
+// Fades data in
 function animateTime() {
     anime({
         targets: '.tripsContainer',
@@ -55,6 +54,7 @@ function animateTime() {
     })
 }
 
+// Refresh animation
 function refresh() {
 
     
@@ -64,16 +64,6 @@ function refresh() {
         duration: 250,
         direction: 'alternate',
         easing: 'easeOutQuad'
-        /*update: function(anim) {
-            if (anim.progress > 80) {
-                var elements = document.querySelectorAll('#trips');
-                elements.forEach(function(element) {
-                    element.classList.remove('transparent');
-                });
-            }
-        }*/
-
-        //easing: 'spring(1, 80, 15, 5)'
     })
 
     anime({

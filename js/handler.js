@@ -1,9 +1,9 @@
-const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Replace with actual coordinates
-const borup = { lat: 55.4959, lon: 11.9778 }; // Replace with actual coordinates
+const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
+const borup = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 
 const subtractedMinutes = 15; // Subtract 15 minutes from current time
 
-const container = document.getElementById('tripsContainer');
+const container = document.getElementById('tripsContainer'); // Get the trips container
 
 // Get current date and time
 let now = new Date();
@@ -20,23 +20,22 @@ let originId, destId;
 navigator.geolocation.getCurrentPosition(position => {
     const userLocation = { lat: position.coords.latitude, lon: position.coords.longitude };
 
-    // Calculate the distance to Roskilde St. and Borup
+    // Calculate the distance to Roskilde St. and Borup St.
     const distanceToRoskildeSt = getDistance(userLocation, roskildeSt);
     const distanceToBorup = getDistance(userLocation, borup);
 
     // Determine the originId and destId based on which location is closer
-    
     if (distanceToRoskildeSt > distanceToBorup) {
-         originId = '8600614'; // Replace with actual originId for Roskilde St.
-         destId = '6555'; // Replace with actual destId for Borup
+         originId = '8600614'; // Id for Borup St.
+         destId = '6555'; // Id for Roskilde St.
     } else {
-         originId = '6555'; // Replace with actual originId for Borup
-         destId = '8600614'; // Replace with actual destId for Roskilde St.
+         originId = '6555'; // Id for Roskilde St.
+         destId = '8600614'; // Id for Boruå St.
     }
 
     
-
-    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
+    // Fetch trip data from the Rejseplanen API
+fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
     .then(response => response.text())
     .then(data => {
         let parser = new DOMParser();
@@ -45,6 +44,7 @@ navigator.geolocation.getCurrentPosition(position => {
         let trips = xmlDoc.getElementsByTagName('Trip');
         let tripData = [];
 
+        // Extract data from the XML document
         for(let i = 0; i < trips.length; i++) {
             let trip = trips[i];
             let origin = trip.getElementsByTagName('Origin')[0];
@@ -56,6 +56,7 @@ navigator.geolocation.getCurrentPosition(position => {
             let originDelayText = origin.getAttribute('rtTime') ? getDelay(origin.getAttribute('rtTime'), origin.getAttribute('time')) : '';
             let destinationDelayText = destination.getAttribute('rtTime') ? getDelay(destination.getAttribute('rtTime'), destination.getAttribute('time')) : '';
 
+            // Push the data to the tripData array
             tripData.push({
                 origin: {
                     name: origin.getAttribute('name'),
@@ -74,37 +75,40 @@ navigator.geolocation.getCurrentPosition(position => {
             });
         }
 
+            // Format the trip data in divs
             container.innerHTML = '';
             tripData.forEach((trip, index) => {
                 const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
                 const originDelayClass = trip.origin.delayed ? '' : 'transparent';
                 const destinationDelayClass = trip.destination.delayed ? '' : 'transparent';
+
                 const tripElement = `
                 <div class="${tripClass} trip ${index + 1}">
-            <div class="title_time">
-                <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
-                <span class="tooltip-container">
-                    <span class="delay-indicator ${originDelayClass}">+${(typeof trip.origin.delayText === 'string' && trip.origin.delayText.match(/\d+/g) && trip.origin.delayText.match(/\d+/g).join('')) || '0'}</span>
-                    <i class="fa-regular fa-clock ${originDelayClass}"></i>
-                    <span class="tooltip-text">${trip.origin.delayText}</span>
-                    <h2 id="title_time">${trip.origin.time}</h2>
-                </span>
-            </div>
-            <p class="track">Spor: ${trip.origin.track}</p>
-            <i class="fa-solid fa-angles-down"></i>
-            <div class="title_time">
-                <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
-                <span class="tooltip-container">
-                    <span class="delay-indicator ${destinationDelayClass}">${(typeof trip.destination.delayText === 'string' && trip.destination.delayText.match(/\d+/g) && trip.destination.delayText.match(/\d+/g).join('')) || '0'}</span>
-                    <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
-                    <span class="tooltip-text">${trip.destination.delayText}</span>
-                    <h2 id="title_time">${trip.destination.time}</h2>
-                </span>
-            </div>
-            <p class="track">Spor: ${trip.destination.track}</p>
-        </div>
+                    <div class="title_time">
+                        <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
+                        <span class="tooltip-container">
+                            <span class="delay-indicator ${originDelayClass}">+${(typeof trip.origin.delayText === 'string' && trip.origin.delayText.match(/\d+/g) && trip.origin.delayText.match(/\d+/g).join('')) || '0'}</span>
+                            <i class="fa-regular fa-clock ${originDelayClass}"></i>
+                            <span class="tooltip-text">${trip.origin.delayText}</span>
+                            <h2 id="title_time">${trip.origin.time}</h2>
+                        </span>
+                    </div>
+                    <p class="track">Spor: ${trip.origin.track}</p>
+                    <i class="fa-solid fa-angles-down"></i>
+                    <div class="title_time">
+                        <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
+                        <span class="tooltip-container">
+                            <span class="delay-indicator ${destinationDelayClass}">+${(typeof trip.destination.delayText === 'string' && trip.destination.delayText.match(/\d+/g) && trip.destination.delayText.match(/\d+/g).join('')) || '0'}</span>
+                            <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
+                            <span class="tooltip-text">${trip.destination.delayText}</span>
+                            <h2 id="title_time">${trip.destination.time}</h2>
+                        </span>
+                    </div>
+                    <p class="track">Spor: ${trip.destination.track}</p>
+                </div>
                 `;
 
+                // Load animations
                 removePlaceholder()
                 deleteElements();
                 animateTime();
@@ -114,16 +118,17 @@ navigator.geolocation.getCurrentPosition(position => {
         .catch(error => console.error('Error:', error));
     });
 
-    function getDelay(rtTime, time) {
+// Get delay data for tooltips
+function getDelay(rtTime, time) {
         let rtTimeDate = new Date(`1970-01-01T${rtTime}:00`);
         let timeDate = new Date(`1970-01-01T${time}:00`);
         let delay = (rtTimeDate - timeDate) / 60000; // Convert milliseconds to minutes
         let delayText = delay === 1 ? `Forsinket:<br> ${delay} minut` : `Forsinket:<br> ${delay} minutter`;
         return delayText;
         
-    }
+}
 
-
+// Updates the trip data when refresh button is pressed
 function getData() {
     // Get current date and time
     let now = new Date();
@@ -133,8 +138,9 @@ function getData() {
 
     // Format time to HH:MM
     let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-
     console.log(time);
+
+    // Fetch trip data from the Rejseplanen API
     fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
@@ -157,6 +163,7 @@ function getData() {
                 const originDelayText = origin.getAttribute('rtTime') ? getDelay(origin.getAttribute('rtTime'), origin.getAttribute('time')) : '';
                 const destinationDelayText = destination.getAttribute('rtTime') ? getDelay(destination.getAttribute('rtTime'), destination.getAttribute('time')) : '';
 
+                // Format the trip data in divs
                 const tripElement = `
                 <div id="trips" class="${tripClass} trip ${index + 1}">
                     <div class="title_time">
@@ -190,19 +197,20 @@ function getData() {
             container.innerHTML = newContent;
         })
         .catch(error => console.error('Error:', error));
+    
 }
 
+// Finds refresh button and adds event listener to it
 const refreshButton = document.querySelector('.refresh');
 
 let isRefreshing = false;
 
 refreshButton.addEventListener('click', function() {
     if (isRefreshing) return;
-    refresh();
     isRefreshing = true;
     this.setAttribute('disabled', 'disabled');
 
-    
+    refresh();
     setTimeout(getData, 0);
 
     setTimeout(() => {
@@ -212,6 +220,7 @@ refreshButton.addEventListener('click', function() {
     }, 3000);
 });
 
+// Calculates the distance between two stations
 function getDistance(location1, location2) {
     const R = 6371e3; // metres
     const φ1 = location1.lat * Math.PI/180; // φ, λ in radians
@@ -227,6 +236,7 @@ function getDistance(location1, location2) {
     return R * c; // in metres
 }
 
+// Removes the placeholder divs
 function deleteElements() {
     const elements = document.querySelectorAll('.delete');
 
@@ -235,6 +245,7 @@ function deleteElements() {
     });
 }
 
+// Applies special CSS class if the website is added to the home screen on iOS
 if (window.navigator.standalone) {
     document.body.classList.add('apple-mobile-web-app');
 }
