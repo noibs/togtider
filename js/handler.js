@@ -1,7 +1,7 @@
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
 const borup = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 
-const subtractedMinutes = 15; // Subtract 15 minutes from current time
+const subtractedMinutes = 25; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
 
