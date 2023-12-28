@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 * {
   font-family: Inter, sans-serif;
 }
@@ -183,7 +184,7 @@ h1 {
   margin: auto 0.5vh;
 }
 .trip #title_time {
-  font-weight: 500;
+  font-weight: 400;
   padding-top: 0 !important;
   margin: 0 !important;
 }
