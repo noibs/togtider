@@ -1,10 +1,4 @@
-js/handler.js.bak
-js/handlerv2.js.bak
-js/handlerv3.js.bak
-js/main.js
-js/main.js.bak
-
+*.bak
 media/icon.psd
 .idea/
 manifest.json
-js/handlerv4.js.bak
