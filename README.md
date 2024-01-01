@@ -18,6 +18,8 @@ De nedstående ressourcer er blevet brugt i projektet:
 
 - [**FontAwesome**](https://fontawesome.com/): Ikoner fra FontAwesome bruges i dette projekt.
 
+- [**Rejseplanens API**](https://help.rejseplanen.dk/hc/da/articles/214174465-Rejseplanens-API): Rejseplanens API bruges til at hente data og holde hele siden kørende.
+
 
 
 
