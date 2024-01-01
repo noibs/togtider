@@ -7,10 +7,6 @@ Pærer symbolet hjælper med at simulerer hvordan lys ville reagere hvis det var
 
 ## Yderligere information:
 
-- **Fag:** Teknologi-B  
-- **Forløb:** Grøn Skole
-- **Lærer:** Rune Arntsen & Ahmad Zafari
-- **Periode:** 06-11-2023/22-12-2023
 
 ## Ressourcer:
 
@@ -21,16 +17,6 @@ De nedstående ressourcer er blevet brugt i projektet:
 - [**Anime.js**](https://animejs.com/): Dette projekt bruger Anime.js til animationer.
 
 - [**FontAwesome**](https://fontawesome.com/): Ikoner fra FontAwesome bruges i dette projekt.
-
-## Bidragsydere:
-
-Kodet hovedsageligt af Elliott Hartmann Ulriksen.
-
-Med hjælp fra:
-- Marcus René Prehn
-- Noah Kofoed Larsen
-- Jonas Lykke Hergård
-- Copilot
 
 
 
