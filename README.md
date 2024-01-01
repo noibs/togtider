@@ -1,6 +1,6 @@
 ## Togtider
-
-Togtider er et dashboard der viser de kommende togtider mellem Borup og Roskilde St. Siden bruger din lokation til automatisk at finde ud af om du skal fra A til B eller omvendt. 
+Togtider er et dashboard der viser de kommende togtider mellem Borup og Roskilde St. <br>
+Siden bruger din lokation til automatisk at finde ud af om du skal fra A til B eller omvendt. 
 
 <img alt="Screenshot af produkt" src="https://pub-174a4ec271f644a082366cbeae208cbd.r2.dev/screenshot.png" width="75%" height="75%">
 
