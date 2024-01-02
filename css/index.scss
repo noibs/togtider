@@ -24,6 +24,7 @@ $accent-color: #3b82f6;
         padding: 0vh auto;
         height: 100%;
         padding-top: 0 !important;
+        margin-top: 0 !important;
     }
 
     .tripsContainer {
@@ -260,6 +261,10 @@ i {
     .title {
         font-size: 1.5em !important;
         margin-top: 3vh !important;
+    }
+
+    .container {
+        margin: 2vh !important;
     }
 }
 

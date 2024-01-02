@@ -18,6 +18,7 @@
     padding: 0vh auto;
     height: 100%;
     padding-top: 0 !important;
+    margin-top: 0 !important;
   }
   .tripsContainer {
     display: block !important;
@@ -216,6 +217,9 @@ i {
 .apple-mobile-web-app .title {
   font-size: 1.5em !important;
   margin-top: 3vh !important;
+}
+.apple-mobile-web-app .container {
+  margin: 2vh !important;
 }
 
 .transparent {
