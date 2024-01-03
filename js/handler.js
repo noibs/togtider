@@ -174,7 +174,7 @@ function getData() {
             trips.forEach((trip, index) => {
 
                 // Stop processing trips after the first three
-                if (index >= 3) {
+                if (index > 3) {
                     return;
                 }
 
