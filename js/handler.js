@@ -1,7 +1,7 @@
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
 const borup = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 
-const subtractedMinutes = 25; // Subtract 15 minutes from current time
+const subtractedMinutes = 15; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
 
@@ -35,7 +35,7 @@ navigator.geolocation.getCurrentPosition(position => {
 
     
     // Fetch trip data from the Rejseplanen API
-fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
+fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&time=${time}&useBus=0`)
     .then(response => response.text())
     .then(data => {
         let parser = new DOMParser();
@@ -46,7 +46,22 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
 
         // Extract data from the XML document
         for(let i = 0; i < trips.length; i++) {
+            // Stop processing trips after the first three
+            if (tripData.length >= 3) {
+                break;
+            }
+
             let trip = trips[i];
+
+            // Check if the trip is cancelled
+            let isCancelled = trip.getAttribute('cancelled');
+            if (isCancelled === 'true') {
+                continue; // Skip this iteration if the trip is cancelled
+            }
+
+            let leg = trip.getElementsByTagName('Leg')[0];
+            let isBus = leg.getAttribute('name').includes('Togbus');
+
             let origin = trip.getElementsByTagName('Origin')[0];
             let destination = trip.getElementsByTagName('Destination')[0];
 
@@ -61,17 +76,18 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 origin: {
                     name: origin.getAttribute('name'),
                     time: originTime,
-                    track: origin.getAttribute('rtTrack') || origin.getAttribute('track'),
+                    track: isBus ? `<i class="fa-regular fa-bus"></i> Togbus` : `Spor: ${origin.getAttribute('rtTrack')}` || `Spor: ${origin.getAttribute('track')}`,
                     delayed: origin.getAttribute('rtTime') !== null,
                     delayText: originDelayText
                 },
                 destination: {
                     name: destination.getAttribute('name'),
                     time: destinationTime,
-                    track: destination.getAttribute('rtTrack') || destination.getAttribute('track'),
+                    track: isBus ? `<i class="fa-regular fa-bus"></i> Togbus` : `Spor: ${destination.getAttribute('rtTrack')}` || `Spor: ${destination.getAttribute('track')}`,
                     delayed: destination.getAttribute('rtTime') !== null,
                     delayText: destinationDelayText
-                }
+                },
+                isBus: isBus
             });
         }
 
@@ -93,7 +109,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                             <h2 id="title_time">${trip.origin.time}</h2>
                         </span>
                     </div>
-                    <p class="track">Spor: ${trip.origin.track}</p>
+                    <p class="track">${trip.origin.track}</p>
                     <i class="fa-solid fa-angles-down"></i>
                     <div class="title_time">
                         <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
@@ -104,7 +120,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                             <h2 id="title_time">${trip.destination.time}</h2>
                         </span>
                     </div>
-                    <p class="track">Spor: ${trip.destination.track}</p>
+                    <p class="track">${trip.destination.track}</p>
                 </div>
                 `;
 
@@ -144,6 +160,8 @@ function getData() {
     fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
+
+            
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data, "text/xml");
 
@@ -154,9 +172,27 @@ function getData() {
             // Process each trip
             let newContent = '';
             trips.forEach((trip, index) => {
+
+                // Stop processing trips after the first three
+                if (index >= 3) {
+                    return;
+                }
+
+                let leg = trip.getElementsByTagName('Leg')[0];
+                let isBus = leg.getAttribute('name').includes('Togbus');
+
                 const origin = trip.getElementsByTagName('Origin')[0];
                 const destination = trip.getElementsByTagName('Destination')[0];
-                
+
+                const originTrackText = isBus ? `<i class="fa-regular fa-bus"></i> Togbus` : `Spor: ${origin.getAttribute('rtTrack')}` || `Spor: ${origin.getAttribute('track')}`;
+                const destinationTrackText = isBus ? `<i class="fa-regular fa-bus"></i> Togbus` : `Spor: ${destination.getAttribute('rtTrack')}` || `Spor: ${destination.getAttribute('track')}`;
+
+                let isCancelled = trip.getAttribute('cancelled');
+                if (isCancelled === 'true') {
+                    return; // Skip this iteration if the trip is cancelled
+                }
+
+                  
                 const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
                 const originDelayClass = origin.getAttribute('rtTime') ? '' : 'transparent';
                 const destinationDelayClass = destination.getAttribute('rtTime') ? '' : 'transparent';
@@ -175,7 +211,7 @@ function getData() {
                             <h2 id="title_time">${origin.getAttribute('rtTime') || origin.getAttribute('time')}</h2>
                         </span>
                     </div>
-                    <p class="track">Spor: ${origin.getAttribute('rtTrack') || origin.getAttribute('track')}</p>
+                    <p class="track">${originTrackText}</p>
 
                     <i class="fa-solid fa-angles-down"></i>
 
@@ -188,7 +224,7 @@ function getData() {
                             <h2 id="title_time">${destination.getAttribute('rtTime') || destination.getAttribute('time')}</h2>
                         </span>
                     </div>
-                    <p class="track">Spor: ${destination.getAttribute('rtTrack') || destination.getAttribute('track')}</p>
+                    <p class="track">${destinationTrackText}</p>
                 </div>
                 `;
                 newContent += tripElement;
