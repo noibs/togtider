@@ -17,6 +17,8 @@ now.setMinutes(now.getMinutes() - subtractedMinutes);
 // Format time to HH:MM
 let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
+// Creates lastIndex for later use
+let lastIndex;
 
 // Get the user's current location
 let originId, destId;
@@ -97,12 +99,13 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
         console.log(warningDivSelector);
         const warningDiv = document.querySelector(warningDivSelector);
         if (tripData.length < 3) {
-            
-            warningDiv.classList.remove('hidden');
-            console.log(tripData.length);
+                warningDiv.classList.remove('hidden');
+                console.log(tripData.length);
+                lastIndex = tripData.length;
             } else {
                 warningDiv.classList.add('hidden');
                 console.log(tripData.length);
+                lastIndex = tripData.length;
             }
 
             // Format the trip data in divs
@@ -360,13 +363,19 @@ window.addEventListener('resize', function() {
         if (window.innerWidth <= 768) {
             tripElement.classList.remove('trip-desktop');
             tripElement.classList.add('trip-mobile');
-            mobileWarning.classList.remove('hidden');
-            desktopWarning.classList.add('hidden');
+
+            if (lastIndex < 3) {
+                mobileWarning.classList.remove('hidden');
+                desktopWarning.classList.add('hidden');
+            }
         } else {
             tripElement.classList.remove('trip-mobile');
             tripElement.classList.add('trip-desktop');
-            desktopWarning.classList.remove('hidden');
-            mobileWarning.classList.add('hidden');
+
+            if (lastIndex < 3) {
+                desktopWarning.classList.remove('hidden');
+                mobileWarning.classList.add('hidden');
+            }
         }
     });
 });
