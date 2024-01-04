@@ -1,7 +1,7 @@
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
 const borup = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 
-const subtractedMinutes = 15; // Subtract 15 minutes from current time
+const subtractedMinutes = 65; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
 
@@ -30,7 +30,7 @@ navigator.geolocation.getCurrentPosition(position => {
          destId = '6555'; // Id for Roskilde St.
     } else {
          originId = '6555'; // Id for Roskilde St.
-         destId = '8600614'; // Id for Boruå St.
+         destId = '8600614'; // Id for Borup St.
     }
 
     
@@ -90,6 +90,15 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 isBus: isBus
             });
         }
+        const warningDiv = document.querySelector('.warning');
+        if (tripData.length < 3) {
+            
+            warningDiv.classList.remove('hidden');
+            console.log(tripData.length);
+            } else {
+                warningDiv.classList.add('hidden');
+                console.log(tripData.length);
+            }
 
             // Format the trip data in divs
             container.innerHTML = '';
@@ -170,8 +179,11 @@ function getData() {
 
             // Process each trip
             // Process each trip
+            let lastIndex = 0;
             let newContent = '';
             trips.forEach((trip, index) => {
+                
+                
 
                 // Stop processing trips after the first three
                 if (index > 3) {
@@ -190,6 +202,8 @@ function getData() {
                 let isCancelled = trip.getAttribute('cancelled');
                 if (isCancelled === 'true') {
                     return; // Skip this iteration if the trip is cancelled
+                } else {
+                    lastIndex++;
                 }
 
                   
@@ -228,9 +242,21 @@ function getData() {
                 </div>
                 `;
                 newContent += tripElement;
-            });
+
+                
 
             container.innerHTML = newContent;
+            
+            });
+            const warningDiv = document.querySelector('.warning');
+            if (lastIndex < 3) {
+                warningDiv.classList.remove('hidden');
+                console.log(lastIndex);
+            } else {
+                warningDiv.classList.add('hidden');
+                console.log(lastIndex);
+            }
+            
         })
         .catch(error => console.error('Error:', error));
     

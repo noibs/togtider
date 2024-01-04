@@ -69,6 +69,22 @@ $accent-color: #3b82f6;
         margin: auto;
         visibility: visible !important;
     }
+
+    .warning {
+    
+        i {
+            font-size: 3em !important;
+        }
+    
+        p {
+            font-size: 1.3em;
+        }
+
+        #extra-break {
+            display: block !important;
+            margin: -1.5vw;
+        }
+    }
 }
 
 @media (min-width: 769px) {
@@ -129,6 +145,7 @@ h1 {
     position: relative;
     background-color: transparent;
     padding: 6vh 8vh;
+    padding-bottom: 0 !important;
     z-index: 1;
     margin: 2vh;
 
@@ -315,6 +332,28 @@ i {
     font-size: 1em;
     margin: 0;
     padding: 0;
+}
+
+.warning {
+    text-align: center;
+    margin-top: 1vw;
+
+    i {
+        color: rgb(255, 136, 0);
+        font-size: 2em;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    #extra-break {
+        display: none;
+    }
+}
+
+.hidden {
+    display: none !important;
 }
 
 .darkmode {
