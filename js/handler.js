@@ -4,7 +4,7 @@ const borupSt = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 const roskildeId = '6555'; // Id for Roskilde St.
 const borupId = '8600614'; // Id for Borup St.
 
-const subtractedMinutes = 15; // Subtract 15 minutes from current time
+const subtractedMinutes = 0; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
 
