@@ -4,6 +4,9 @@ const borupSt = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 const roskildeId = '6555'; // Id for Roskilde St.
 const borupId = '8600614'; // Id for Borup St.
 
+const roskilde = 'Roskilde St.'; // Name for Roskilde St.
+const borup = 'Borup St.'; // Name for Borup St.
+
 const subtractedMinutes = 0; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
@@ -21,7 +24,7 @@ let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().t
 let lastIndex;
 
 // Get the user's current location
-let originId, destId;
+let originId, destId, originName, destName;
 navigator.geolocation.getCurrentPosition(position => {
     const userLocation = { lat: position.coords.latitude, lon: position.coords.longitude };
 
@@ -32,15 +35,19 @@ navigator.geolocation.getCurrentPosition(position => {
     // Determine the originId and destId based on which location is closer
     if (distanceToRoskildeSt > distanceToBorup) {
          originId = borupId; // Id for Borup St.
+         originName = borup; // Name for Borup St.
          destId = roskildeId; // Id for Roskilde St.
+         destName = roskilde; // Name for Roskilde St.
     } else {
-         originId = roskildeId; // Id for Roskilde St.
-         destId = borupId; // Id for Borup St.
+        originId = roskildeId; // Id for Roskilde St.
+        originName = roskilde; // Name for Roskilde St.
+        destId = borupId; // Id for Borup St.
+        destName = borup; // Name for Borup St.
     }
 
     
     // Fetch trip data from the Rejseplanen API
-fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&time=${time}&useBus=0`)
+fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&time=2330&useBus=0`)
     .then(response => response.text())
     .then(data => {
         let parser = new DOMParser();
@@ -49,12 +56,16 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
         let trips = xmlDoc.getElementsByTagName('Trip');
         let tripData = [];
 
+        let isDifferentDestination = false;
+
         // Extract data from the XML document
         for(let i = 0; i < trips.length; i++) {
             // Stop processing trips after the first three
             if (tripData.length >= 3) {
                 break;
             }
+
+            
 
             let trip = trips[i];
 
@@ -69,6 +80,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
 
             let origin = trip.getElementsByTagName('Origin')[0];
             let destination = trip.getElementsByTagName('Destination')[0];
+            let destinationName = destination.getAttribute('name');
 
             let originTime = origin.getAttribute('rtTime') || origin.getAttribute('time');
             let destinationTime = destination.getAttribute('rtTime') || destination.getAttribute('time');
@@ -76,6 +88,10 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
             let originDelayText = origin.getAttribute('rtTime') ? getDelay(origin.getAttribute('rtTime'), origin.getAttribute('time')) : '';
             let destinationDelayText = destination.getAttribute('rtTime') ? getDelay(destination.getAttribute('rtTime'), destination.getAttribute('time')) : '';
 
+            if (destinationName !== destName) {
+                isDifferentDestination = true;
+                console.log('Different destination');
+            }
             // Push the data to the tripData array
             tripData.push({
                 origin: {
@@ -116,7 +132,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 const destinationDelayClass = trip.destination.delayed ? '' : 'transparent';
 
                 const tripElement = `
-                <div class="${tripClass} trip ${index + 1}">
+                <div class="${tripClass} trip trip-${index + 1}">
                     <div class="title_time">
                         <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
                         <span class="tooltip-container">
@@ -127,7 +143,10 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                         </span>
                     </div>
                     <p class="track">${trip.origin.track}</p>
-                    <i class="fa-solid fa-angles-down"></i>
+                    <div class="arrow_text">
+                        <i class="fa-solid fa-angles-down"></i>
+                        <p class="multipleStops hidden"><i class="fa-regular fa-circle-exclamation"></i> Ruten indeholder flere skift.</p>
+                    </div>
                     <div class="title_time">
                         <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
                         <span class="tooltip-container">
@@ -146,9 +165,21 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 deleteElements();
                 animateTime();
                 container.innerHTML += tripElement;
+                
+            });
+
+            tripData.forEach((trip, index) => {
+                let destinationName = trip.destination.name;
+            
+                if (destinationName !== destName) {
+                    // Remove the 'hidden' class from .multipleStops of the specific trip
+                    document.querySelector(`.trip-${index + 1} .multipleStops`).classList.remove('hidden');
+                    console.log('Removed hidden class');
+                }
             });
         })
         .catch(error => console.error('Error:', error));
+        
     });
 
 // Get delay data for tooltips
@@ -174,7 +205,7 @@ function getData() {
     console.log(time);
 
     // Fetch trip data from the Rejseplanen API
-    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
+    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=2330`)
         .then(response => response.text())
         .then(data => {
             
@@ -223,7 +254,7 @@ function getData() {
 
                 // Format the trip data in divs
                 const tripElement = `
-                <div id="trips" class="${tripClass} trip ${index + 1}">
+                <div id="trips" class="${tripClass} trip trip-${index + 1}">
                     <div class="title_time">
                         <h2 class="station">${origin.getAttribute('name').slice(0, -1)}:</h2>
                         <span class="tooltip-container">
@@ -235,7 +266,10 @@ function getData() {
                     </div>
                     <p class="track">${originTrackText}</p>
 
-                    <i class="fa-solid fa-angles-down"></i>
+                    <div class="arrow_text">
+                        <i class="fa-solid fa-angles-down"></i>
+                        <p class="multipleStops hidden"><i class="fa-regular fa-circle-exclamation"></i> Ruten indeholder flere skift.</p>
+                    </div>
 
                     <div class="title_time">
                         <h2 class="station">${destination.getAttribute('name').slice(0, -1)}:</h2>
@@ -268,6 +302,17 @@ function getData() {
                 warningDiv.classList.add('hidden');
                 console.log(lastIndex);
             }
+
+            trips.forEach((trip, index) => {
+                let destination = trip.getElementsByTagName('Destination')[0];
+                let destinationName = destination.getAttribute('name');
+            
+                if (destinationName !== destName) {
+                    // Remove the 'hidden' class from .multipleStops of the specific trip
+                    document.querySelector(`.trip-${index + 1} .multipleStops`).classList.remove('hidden');
+                    console.log('Removed hidden class: ' + destinationName);
+                }
+            });
             
         })
         .catch(error => console.error('Error:', error));

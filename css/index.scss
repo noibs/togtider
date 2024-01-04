@@ -80,12 +80,14 @@ $accent-color: #3b82f6;
         p {
             font-size: 1.3em;
         }
+    }
 
-        /*#extra-break {
-            display: block !important;
-            //margin: -1.5vw;
-            line-height: -100px;
-        }*/
+    .multipleStops {
+        font-size: .95em !important;
+
+        i {
+            margin: 0 .4em !important;
+        }
     }
 }
 
@@ -357,6 +359,28 @@ i {
 .warning-container {
     padding: 0 !important;
     display: inline-flexbox !important;
+}
+
+.arrow_text {
+    display: flex;
+    text-align: right;
+
+    p {
+        margin: auto 0;
+    }
+
+    .multipleStops {
+        display: flex;
+        justify-content: right;
+        width: 100%;
+        font-size: .9em;
+    }
+
+    .fa-circle-exclamation {
+        text-align: right;
+        margin: auto .4em;
+        font-size: 1.1em;
+    }
 }
 
 .hidden {

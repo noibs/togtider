@@ -55,17 +55,18 @@
   }
   .warning {
     margin-top: 5vh !important;
-    /*#extra-break {
-        display: block !important;
-        //margin: -1.5vw;
-        line-height: -100px;
-    }*/
   }
   .warning i {
     font-size: 3em !important;
   }
   .warning p {
     font-size: 1.3em;
+  }
+  .multipleStops {
+    font-size: 0.95em !important;
+  }
+  .multipleStops i {
+    margin: 0 0.4em !important;
   }
 }
 @media (min-width: 769px) {
@@ -302,6 +303,25 @@ i {
 .warning-container {
   padding: 0 !important;
   display: inline-flexbox !important;
+}
+
+.arrow_text {
+  display: flex;
+  text-align: right;
+}
+.arrow_text p {
+  margin: auto 0;
+}
+.arrow_text .multipleStops {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  font-size: 0.9em;
+}
+.arrow_text .fa-circle-exclamation {
+  text-align: right;
+  margin: auto 0.4em;
+  font-size: 1.1em;
 }
 
 .hidden {
