@@ -1,5 +1,8 @@
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
-const borup = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
+const borupSt = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
+
+const roskildeId = '6555'; // Id for Roskilde St.
+const borupId = '8600614'; // Id for Borup St.
 
 const subtractedMinutes = 15; // Subtract 15 minutes from current time
 
@@ -22,15 +25,15 @@ navigator.geolocation.getCurrentPosition(position => {
 
     // Calculate the distance to Roskilde St. and Borup St.
     const distanceToRoskildeSt = getDistance(userLocation, roskildeSt);
-    const distanceToBorup = getDistance(userLocation, borup);
+    const distanceToBorup = getDistance(userLocation, borupSt);
 
     // Determine the originId and destId based on which location is closer
     if (distanceToRoskildeSt > distanceToBorup) {
-         originId = '8600614'; // Id for Borup St.
-         destId = '6555'; // Id for Roskilde St.
+         originId = borupId; // Id for Borup St.
+         destId = roskildeId; // Id for Roskilde St.
     } else {
-         originId = '6555'; // Id for Roskilde St.
-         destId = '8600614'; // Id for Borup St.
+         originId = roskildeId; // Id for Roskilde St.
+         destId = borupId; // Id for Borup St.
     }
 
     
@@ -160,7 +163,7 @@ function getData() {
     // Get current date and time
     let now = new Date();
 
-    // Subtract 15 minutes
+    // Subtract specified minutes
     now.setMinutes(now.getMinutes() - subtractedMinutes);
 
     // Format time to HH:MM
@@ -171,7 +174,6 @@ function getData() {
     fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
-
             
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data, "text/xml");
@@ -179,7 +181,6 @@ function getData() {
             // Extract the trips from the XML document
             const trips = Array.from(xmlDoc.getElementsByTagName('Trip'));
 
-            // Process each trip
             // Process each trip
             let lastIndex = 0;
             let newContent = '';
@@ -201,10 +202,12 @@ function getData() {
                 const originTrackText = isBus ? `<i class="fa-regular fa-bus"></i> Togbus` : `Spor: ${origin.getAttribute('rtTrack')}` || `Spor: ${origin.getAttribute('track')}`;
                 const destinationTrackText = isBus ? `<i class="fa-regular fa-bus"></i> Togbus` : `Spor: ${destination.getAttribute('rtTrack')}` || `Spor: ${destination.getAttribute('track')}`;
 
+                // Check if the trip is cancelled
                 let isCancelled = trip.getAttribute('cancelled');
                 if (isCancelled === 'true') {
                     return; // Skip this iteration if the trip is cancelled
                 } else {
+                    // Increment the lastIndex if the trip is not cancelled
                     lastIndex++;
                 }
 
@@ -251,8 +254,7 @@ function getData() {
             
             });
             
-            //const warningDiv = document.querySelector('.warning');
-
+            // Applies warning div if there are less than 3 trips
             const warningDivSelector = window.innerWidth <= 768 ? '.warning-mobile' : '.warning-desktop';
             console.log(warningDivSelector);
             const warningDiv = document.querySelector(warningDivSelector);
@@ -338,6 +340,7 @@ function changeTheme() {
     localStorage.setItem('theme', element.classList.contains("darkmode") ? "darkmode" : "lightmode");
 }
 
+// Loads your preferred theme
 window.onload = function() {
     var savedTheme = localStorage.getItem('theme') || "lightmode";
     document.body.style.transition = "none";  // Temporarily disable transitions
@@ -345,6 +348,28 @@ window.onload = function() {
     window.getComputedStyle(document.body).getPropertyValue('background-color');  // Trigger a reflow
     document.body.style.transition = "";  // Re-enable transitions
 }
+
+
+// Toggles between desktop and mobile styles when the window is resized
+window.addEventListener('resize', function() {
+    const tripElements = document.querySelectorAll('.trip');
+    
+    tripElements.forEach((tripElement) => {
+        const desktopWarning = document.querySelector('.warning-desktop');
+        const mobileWarning = document.querySelector('.warning-mobile');
+        if (window.innerWidth <= 768) {
+            tripElement.classList.remove('trip-desktop');
+            tripElement.classList.add('trip-mobile');
+            mobileWarning.classList.remove('hidden');
+            desktopWarning.classList.add('hidden');
+        } else {
+            tripElement.classList.remove('trip-mobile');
+            tripElement.classList.add('trip-desktop');
+            desktopWarning.classList.remove('hidden');
+            mobileWarning.classList.add('hidden');
+        }
+    });
+});
 
 // Applies special CSS class if the website is added to the home screen on iOS
 if (window.navigator.standalone) {
