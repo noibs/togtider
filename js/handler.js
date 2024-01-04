@@ -1,7 +1,7 @@
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
 const borup = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 
-const subtractedMinutes = 65; // Subtract 15 minutes from current time
+const subtractedMinutes = 150; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
 
@@ -90,7 +90,9 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 isBus: isBus
             });
         }
-        const warningDiv = document.querySelector('.warning');
+        const warningDivSelector = window.innerWidth <= 768 ? '.warning-mobile' : '.warning-desktop';
+        console.log(warningDivSelector);
+        const warningDiv = document.querySelector(warningDivSelector);
         if (tripData.length < 3) {
             
             warningDiv.classList.remove('hidden');
@@ -248,7 +250,12 @@ function getData() {
             container.innerHTML = newContent;
             
             });
-            const warningDiv = document.querySelector('.warning');
+            
+            //const warningDiv = document.querySelector('.warning');
+
+            const warningDivSelector = window.innerWidth <= 768 ? '.warning-mobile' : '.warning-desktop';
+            console.log(warningDivSelector);
+            const warningDiv = document.querySelector(warningDivSelector);
             if (lastIndex < 3) {
                 warningDiv.classList.remove('hidden');
                 console.log(lastIndex);

@@ -53,15 +53,19 @@
     margin: auto;
     visibility: visible !important;
   }
+  .warning {
+    margin-top: 5vh !important;
+    /*#extra-break {
+        display: block !important;
+        //margin: -1.5vw;
+        line-height: -100px;
+    }*/
+  }
   .warning i {
     font-size: 3em !important;
   }
   .warning p {
     font-size: 1.3em;
-  }
-  .warning #extra-break {
-    display: block !important;
-    margin: -1.5vw;
   }
 }
 @media (min-width: 769px) {
@@ -293,6 +297,11 @@ i {
 }
 .warning #extra-break {
   display: none;
+}
+
+.warning-container {
+  padding: 0 !important;
+  display: inline-flexbox !important;
 }
 
 .hidden {

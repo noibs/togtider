@@ -71,7 +71,8 @@ $accent-color: #3b82f6;
     }
 
     .warning {
-    
+        margin-top: 5vh !important;
+
         i {
             font-size: 3em !important;
         }
@@ -80,10 +81,11 @@ $accent-color: #3b82f6;
             font-size: 1.3em;
         }
 
-        #extra-break {
+        /*#extra-break {
             display: block !important;
-            margin: -1.5vw;
-        }
+            //margin: -1.5vw;
+            line-height: -100px;
+        }*/
     }
 }
 
@@ -350,6 +352,11 @@ i {
     #extra-break {
         display: none;
     }
+}
+
+.warning-container {
+    padding: 0 !important;
+    display: inline-flexbox !important;
 }
 
 .hidden {
