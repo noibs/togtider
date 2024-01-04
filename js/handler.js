@@ -350,6 +350,20 @@ window.onload = function() {
     document.body.classList.add(savedTheme);
     window.getComputedStyle(document.body).getPropertyValue('background-color');  // Trigger a reflow
     document.body.style.transition = "";  // Re-enable transitions
+
+    fetch('https://api.github.com/repos/noibs/togtider/commits')
+        .then(response => response.json())
+        .then(data => {
+            const lastPushDate = new Date(data[0].commit.author.date);
+            const formattedDate = ('0' + lastPushDate.getHours()).slice(-2) + ':' +
+                                  ('0' + lastPushDate.getMinutes()).slice(-2) + ', ' +
+                                  ('0' + lastPushDate.getDate()).slice(-2) + '/' +
+                                  ('0' + (lastPushDate.getMonth() + 1)).slice(-2) + '/' +
+                                  lastPushDate.getFullYear().toString().slice(-2);
+            const comment = document.createComment('LAST UPDATED: ' + formattedDate);
+            document.body.setAttribute('data-last-updated', 'LAST UPDATED: ' + formattedDate);
+            console.log('LAST UPDATED: ' + formattedDate);
+        });
 }
 
 
