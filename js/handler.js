@@ -47,7 +47,7 @@ navigator.geolocation.getCurrentPosition(position => {
 
     
     // Fetch trip data from the Rejseplanen API
-fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&time=2330&useBus=0`)
+fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&time=${time}&useBus=0`)
     .then(response => response.text())
     .then(data => {
         let parser = new DOMParser();
@@ -205,7 +205,7 @@ function getData() {
     console.log(time);
 
     // Fetch trip data from the Rejseplanen API
-    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=2330`)
+    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
             
