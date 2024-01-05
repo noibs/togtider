@@ -32,6 +32,10 @@ navigator.geolocation.getCurrentPosition(position => {
     const distanceToRoskildeSt = getDistance(userLocation, roskildeSt);
     const distanceToBorup = getDistance(userLocation, borupSt);
 
+    // Disable refreshing on load
+    isRefreshing = true;
+    swapRefreshing = true;
+
     // Determine the originId and destId based on which location is closer
     if (distanceToRoskildeSt > distanceToBorup) {
          originId = borupId; // Id for Borup St.
@@ -50,6 +54,7 @@ navigator.geolocation.getCurrentPosition(position => {
 fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&time=${time}&useBus=0`)
     .then(response => response.text())
     .then(data => {
+
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(data, "text/xml");
 
@@ -165,6 +170,10 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 deleteElements();
                 animateTime();
                 container.innerHTML += tripElement;
+
+                // Allow refreshing again
+                isRefreshing = false;
+                swapRefreshing = false;
                 
             });
 
@@ -327,7 +336,7 @@ refreshButton.addEventListener('click', function() {
     if (isRefreshing) return;
     isRefreshing = true;
     this.setAttribute('disabled', 'disabled');
-
+    refreshIcon();
     refresh();
     setTimeout(getData, 0);
 
@@ -338,7 +347,28 @@ refreshButton.addEventListener('click', function() {
     }, 3000);
 });
 
-// Changes theme wit delay
+// Finds refresh button and adds event listener to it
+const swapButton = document.querySelector('#swap');
+let swapRefreshing = false;
+
+swapButton.addEventListener('click', function() {
+    if (swapRefreshing) return;
+    swapRefreshing = true;
+    this.setAttribute('disabled', 'disabled');
+    refresh();
+    swapAnim();
+    swap();
+
+    setTimeout(() => {
+        
+        this.removeAttribute('disabled');
+        swapRefreshing = false;
+    }, 3000);
+});
+
+
+
+// Changes theme with delay
 const themeButton = document.querySelector('.fa-train-subway');
 let isChanging = false;
 
@@ -355,6 +385,35 @@ themeButton.addEventListener('click', function() {
         isChanging = false;
     }, 2000);
 });
+
+function swapOriginAndDestination(originId, originName, destId, destName) {
+    let tempId = originId;
+    let tempName = originName;
+
+    originId = destId;
+    originName = destName;
+
+    destId = tempId;
+    destName = tempName;
+    return {
+        originId: originId,
+        originName: originName,
+        destId: destId,
+        destName: destName
+    };
+
+    
+}
+
+function swap() {
+    let swappedValues = swapOriginAndDestination(originId, originName, destId, destName);
+    originId = swappedValues.originId;
+    originName = swappedValues.originName;
+    destId = swappedValues.destId;
+    destName = swappedValues.destName;
+
+    getData(originId, originName, destId, destName);
+}
 
 // Calculates the distance between two stations
 function getDistance(location1, location2) {

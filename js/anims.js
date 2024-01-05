@@ -65,11 +65,25 @@ function refresh() {
         direction: 'alternate',
         easing: 'easeOutQuad'
     })
+}
 
+// Refresh button loading animation
+function refreshIcon() {
     anime({
         targets: '.refresh i',
         rotate: ['0deg', '720deg'],
         duration: 2000,
         easing: 'spring(1, 80, 15, 5)'
+    })
+}
+
+// Swap button animation
+function swapAnim() {
+    anime({
+        targets: '#swap',
+        scale: ['100%', '90%'],
+        duration: 150,
+        direction: 'alternate',
+        easing: 'easeOutQuad'
     })
 }
