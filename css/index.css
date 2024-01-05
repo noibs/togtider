@@ -102,7 +102,7 @@
 .title i {
   color: #3b82f6;
   font-size: 2.5em;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
 }
 .title i:hover {
   transform: scale(1.1);
@@ -156,7 +156,7 @@ h1 {
   max-width: fit-content;
   min-width: 15vw;
   justify-content: center;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
   z-index: 1;
 }
 .trip:hover {
@@ -176,12 +176,12 @@ h1 {
   border: 2px solid #e4e4e7;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease;
   z-index: 0;
 }
 .refresh button:hover {
   background-color: #0b63f3;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.3);
   transform: scale(1.1);
 }
 .refresh button i {
@@ -336,14 +336,14 @@ i {
   border: 1px solid #303035 !important;
 }
 .darkmode .trip:hover {
-  box-shadow: 0 0 25px rgba(169, 169, 169, 0.05) !important;
+  box-shadow: 0 0 40px rgba(169, 169, 169, 0.03) !important;
 }
-.darkmode h1, .darkmode h2, .darkmode p, .darkmode span, .darkmode .fa-angles-down {
+.darkmode h1, .darkmode h2, .darkmode p, .darkmode span, .darkmode .fa-angles-down, .darkmode .fa-circle-exclamation {
   color: white !important;
 }
 .darkmode button {
   border: 2px solid #303035 !important;
 }
 .darkmode button:hover {
-  box-shadow: 0 0 50px rgba(169, 169, 169, 0.05) !important;
+  box-shadow: 0 0 30px rgba(169, 169, 169, 0.05) !important;
 }/*# sourceMappingURL=index.css.map */

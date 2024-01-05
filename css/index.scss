@@ -131,7 +131,7 @@ $accent-color: #3b82f6;
     i {
         color: $accent-color;
         font-size: 2.5em;
-        transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease;
 
         &:hover {
             transform: scale(1.1);
@@ -189,7 +189,7 @@ h1 {
     max-width: fit-content;
     min-width: 15vw;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
     z-index: 1;
 
     &:hover {
@@ -210,12 +210,12 @@ h1 {
         border: 2px solid #e4e4e7;
         border-radius: 10px;
         cursor: pointer;
-        transition: all .3s ease-in-out;
+        transition: all .2s ease;
         z-index: 0;
 
         &:hover {
             background-color: darken($accent-color, 10%);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0 100px rgba(0, 0, 0, 0.3);
             transform: scale(1.1);
         }
 
@@ -395,11 +395,11 @@ i {
         border: 1px solid #303035 !important;
 
         &:hover {
-            box-shadow: 0 0 25px rgba(169, 169, 169, 0.05) !important;
+            box-shadow: 0 0 40px rgba(169, 169, 169, 0.03) !important;
         }
     }
     
-    h1, h2, p, span, .fa-angles-down {
+    h1, h2, p, span, .fa-angles-down, .fa-circle-exclamation {
         color: white !important;
     }
 
@@ -407,7 +407,7 @@ i {
         border: 2px solid #303035 !important;
 
         &:hover {
-            box-shadow: 0 0 50px rgba(169, 169, 169, 0.05) !important;
+            box-shadow: 0 0 30px rgba(169, 169, 169, 0.05) !important;
         }
 
     }
