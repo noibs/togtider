@@ -174,7 +174,6 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 // Allow refreshing again
                 isRefreshing = false;
                 swapRefreshing = false;
-                
             });
 
             tripData.forEach((trip, index) => {
@@ -189,6 +188,18 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
         })
         .catch(error => console.error('Error:', error));
         
+    }, error => {
+        originId = borupId; // Id for Borup St.
+        originName = borup; // Name for Borup St.
+        destId = roskildeId; // Id for Roskilde St.
+        destName = roskilde; // Name for Roskilde St.
+
+        isRefreshing = false;
+        swapRefreshing = false;
+        container.innerHTML = '';
+        refresh();
+        getData();
+
     });
 
 // Get delay data for tooltips
@@ -293,6 +304,7 @@ function getData() {
                 </div>
                 `;
                 newContent += tripElement;
+
 
                 
 

@@ -16,6 +16,10 @@ $accent-color: #3b82f6;
         font-size: 2em !important;
     }
 
+    .title {
+        margin-bottom: 1.4vh !important;
+    }
+
     h1, i {
         margin: auto 1vw;
     }
@@ -34,13 +38,14 @@ $accent-color: #3b82f6;
         margin-left: -50%;
     }
 
-    .trips {
-        padding: 10000vw !important;
+    .trip {
+        margin: 1vh auto !important;
     }
 
     button {
-        margin-top: 1vh !important;
-        width: 25vw !important;
+        margin-top: 1.5vh !important;
+        width: 50% !important;
+        border-radius: 50vw  !important;
     }
 
     .track {
@@ -175,7 +180,6 @@ h1 {
 
 .trip-mobile {
     width: 50vw !important;
-    margin: 2vh auto !important;
     margin-bottom: 0 !important;
     max-width: none !important;
 }
@@ -274,9 +278,14 @@ i {
     font-size: .7em !important;
 
     button {
-        margin-top: 4vh !important;
+        margin-top: 3vh !important;
         width: 25vw !important;
+        border-radius: 10vw !important;
         transform: scale(1.5) !important;
+    }
+
+    .trip {
+        margin: 2vh auto !important;
     }
 
     .title {

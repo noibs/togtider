@@ -11,6 +11,9 @@
   .title i {
     font-size: 2em !important;
   }
+  .title {
+    margin-bottom: 1.4vh !important;
+  }
   h1, i {
     margin: auto 1vw;
   }
@@ -26,12 +29,13 @@
     margin: auto;
     margin-left: -50%;
   }
-  .trips {
-    padding: 10000vw !important;
+  .trip {
+    margin: 1vh auto !important;
   }
   button {
-    margin-top: 1vh !important;
-    width: 25vw !important;
+    margin-top: 1.5vh !important;
+    width: 50% !important;
+    border-radius: 50vw !important;
   }
   .track {
     font-size: 1.3em !important;
@@ -141,7 +145,6 @@ h1 {
 
 .trip-mobile {
   width: 50vw !important;
-  margin: 2vh auto !important;
   margin-bottom: 0 !important;
   max-width: none !important;
 }
@@ -226,9 +229,13 @@ i {
   font-size: 0.7em !important;
 }
 .apple-mobile-web-app button {
-  margin-top: 4vh !important;
+  margin-top: 3vh !important;
   width: 25vw !important;
+  border-radius: 10vw !important;
   transform: scale(1.5) !important;
+}
+.apple-mobile-web-app .trip {
+  margin: 2vh auto !important;
 }
 .apple-mobile-web-app .title {
   font-size: 1.5em !important;
