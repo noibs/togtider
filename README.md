@@ -5,6 +5,7 @@ Siden bruger din lokation til automatisk at finde ud af om du skal fra A til B e
 [![last commit](https://img.shields.io/github/last-commit/noibs/togtider)](https://github.com/noibs/togtider)
 [![GitHub License](https://img.shields.io/github/license/noibs/togtider?color=%23ab0000)](https://github.com/noibs/togtider/blob/main/LICENSE)
 [![GitHub Release](https://img.shields.io/github/release/noibs/togtider)](https://github.com/noibs/togtider/releases)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/noibs/togtider?color=%23fc6b03)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Ftogtider.ellioott.me%2F&color=purple&link=https%3A%2F%2Ftogtider.ellioott.me%2F)](https://togtider.ellioott.me/)
 
 <img alt="Screenshot af produkt" src="https://pub-174a4ec271f644a082366cbeae208cbd.r2.dev/screenshot.png" width="75%" height="75%">
