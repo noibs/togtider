@@ -23,6 +23,10 @@ let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().t
 // Creates lastIndex for later use
 let lastIndex;
 
+// Disable refreshing on load
+let isRefreshing = true;
+let swapRefreshing = true;
+
 // Get the user's current location
 let originId, destId, originName, destName;
 navigator.geolocation.getCurrentPosition(position => {
@@ -31,10 +35,6 @@ navigator.geolocation.getCurrentPosition(position => {
     // Calculate the distance to Roskilde St. and Borup St.
     const distanceToRoskildeSt = getDistance(userLocation, roskildeSt);
     const distanceToBorup = getDistance(userLocation, borupSt);
-
-    // Disable refreshing on load
-    isRefreshing = true;
-    swapRefreshing = true;
 
     // Determine the originId and destId based on which location is closer
     if (distanceToRoskildeSt > distanceToBorup) {
@@ -330,7 +330,6 @@ function getData() {
 
 // Finds refresh button and adds event listener to it
 const refreshButton = document.querySelector('.refresh');
-let isRefreshing = false;
 
 refreshButton.addEventListener('click', function() {
     if (isRefreshing) return;
@@ -349,7 +348,6 @@ refreshButton.addEventListener('click', function() {
 
 // Finds refresh button and adds event listener to it
 const swapButton = document.querySelector('#swap');
-let swapRefreshing = false;
 
 swapButton.addEventListener('click', function() {
     if (swapRefreshing) return;
