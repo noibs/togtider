@@ -2,7 +2,7 @@ const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
 const borupSt = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
 
 const roskildeId = '6555'; // Id for Roskilde St.
-const borupId = '8600614'; // Id for Borup St.
+const borupId = '5426'; // Id for Borup St.
 
 const roskilde = 'Roskilde St.'; // Name for Roskilde St.
 const borup = 'Borup St.'; // Name for Borup St.
@@ -27,27 +27,71 @@ let lastIndex;
 let isRefreshing = true;
 let swapRefreshing = true;
 
+
+// Get the distance to stations from localStorage
+let oLat, oLon, dLat, dLon;
+
+oLat = localStorage.getItem('oLat') || borupSt.lat; // Default latitude for Borup St.
+oLon = localStorage.getItem('oLon') || borupSt.lon; // Default longitude for Borup St.
+dLat = localStorage.getItem('dLat') || roskildeSt.lat; // Default latitude for Roskilde St.
+dLon = localStorage.getItem('dLon') || roskildeSt.lon; // Default longitude for Roskilde St.
+
+
 // Get the user's current location
 let originId, destId, originName, destName;
+
+// Load data from localStorage or use default values
+originId = localStorage.getItem('originId') || borupId; // Default Id for Borup St.*/
+originName = localStorage.getItem('originName') || borup; // Default name for Borup St.*/
+destId = localStorage.getItem('destId') || roskildeId; // Default Id for Roskilde St.*/
+destName = localStorage.getItem('destName') || roskilde; // Default name for Roskilde St.*/
+
 navigator.geolocation.getCurrentPosition(position => {
     const userLocation = { lat: position.coords.latitude, lon: position.coords.longitude };
 
+    const oCoords = { lat: oLat, lon: oLon };
+    const dCoords = { lat: dLat, lon: dLon };
+
     // Calculate the distance to Roskilde St. and Borup St.
-    const distanceToRoskildeSt = getDistance(userLocation, roskildeSt);
-    const distanceToBorup = getDistance(userLocation, borupSt);
+    const distanceToDest = getDistance(userLocation, dCoords);
+    const distanceToOrigin = getDistance(userLocation, oCoords);
 
     // Determine the originId and destId based on which location is closer
-    if (distanceToRoskildeSt > distanceToBorup) {
-         originId = borupId; // Id for Borup St.
-         originName = borup; // Name for Borup St.
-         destId = roskildeId; // Id for Roskilde St.
-         destName = roskilde; // Name for Roskilde St.
+    if (distanceToDest > distanceToOrigin) {
+        originId; // Id for Borup St.
+        originName; // Name for Borup St.
+        destId; // Id for Roskilde St.
+        destName; // Name for Roskilde St.
+        oLat; // Latitude for Borup St.
+        oLon; // Longitude for Borup St.
+        dLat; // Latitude for Roskilde St.
+        dLon; // Longitude for Roskilde St.
     } else {
-        originId = roskildeId; // Id for Roskilde St.
-        originName = roskilde; // Name for Roskilde St.
-        destId = borupId; // Id for Borup St.
-        destName = borup; // Name for Borup St.
+        let tempId = originId;
+        let tempName = originName;
+        let tempLat = oLat;
+        let tempLon = oLon;
+
+        originId = destId; // Id for Roskilde St.
+        originName = destName; // Name for Roskilde St.
+        oLat = dLat; // Latitude for Roskilde St.
+        oLon = dLon; // Longitude for Roskilde St.
+
+        destId = tempId; // Id for Borup St.
+        destName = tempName; // Name for Borup St.
+        dLat = tempLat; // Latitude for Borup St.
+        dLon = tempLon; // Longitude for Borup St.
     }
+
+    // Save data to localStorage
+    localStorage.setItem('originId', originId);
+    localStorage.setItem('originName', originName);
+    localStorage.setItem('oLat', oLat);
+    localStorage.setItem('oLon', oLon);
+    localStorage.setItem('destId', destId);
+    localStorage.setItem('destName', destName);
+    localStorage.setItem('dLat', dLat);
+    localStorage.setItem('dLon', dLon);
 
     
     // Fetch trip data from the Rejseplanen API
@@ -117,7 +161,6 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
             });
         }
         const warningDivSelector = window.innerWidth <= 768 ? '.warning-mobile' : '.warning-desktop';
-        console.log(warningDivSelector);
         const warningDiv = document.querySelector(warningDivSelector);
         if (tripData.length < 3) {
                 warningDiv.classList.remove('hidden');
@@ -139,7 +182,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 const tripElement = `
                 <div class="${tripClass} trip trip-${index + 1}">
                     <div class="title_time">
-                        <h2 class="station">${trip.origin.name.slice(0, -1)}:</h2>
+                        <h2 class="station origin-station">${trip.origin.name.slice(0, -1)}:</h2>
                         <span class="tooltip-container">
                             <span class="delay-indicator ${originDelayClass}">+${(typeof trip.origin.delayText === 'string' && trip.origin.delayText.match(/\d+/g) && trip.origin.delayText.match(/\d+/g).join('')) || '0'}</span>
                             <i class="fa-regular fa-clock ${originDelayClass}"></i>
@@ -153,7 +196,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                         <p class="multipleStops hidden"><i class="fa-regular fa-circle-exclamation"></i> Ruten indeholder flere skift.</p>
                     </div>
                     <div class="title_time">
-                        <h2 class="station">${trip.destination.name.slice(0, -1)}:</h2>
+                        <h2 class="station destination-station">${trip.destination.name.slice(0, -1)}:</h2>
                         <span class="tooltip-container">
                             <span class="delay-indicator ${destinationDelayClass}">+${(typeof trip.destination.delayText === 'string' && trip.destination.delayText.match(/\d+/g) && trip.destination.delayText.match(/\d+/g).join('')) || '0'}</span>
                             <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
@@ -185,6 +228,11 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                     console.log('Removed hidden class');
                 }
             });
+
+            const script = document.createElement('script');
+            script.src = './js/search.js';
+            script.type = 'module';
+            document.body.appendChild(script);
         })
         .catch(error => console.error('Error:', error));
         
@@ -214,6 +262,13 @@ function getDelay(rtTime, time) {
 
 // Updates the trip data when refresh button is pressed
 function getData() {
+
+    // Load data from localStorage or use default values
+    originId = localStorage.getItem('originId') || borupId; // Default Id for Borup St.
+    originName = localStorage.getItem('originName') || borup; // Default name for Borup St.
+    destId = localStorage.getItem('destId') || roskildeId; // Default Id for Roskilde St.
+    destName = localStorage.getItem('destName') || roskilde; // Default name for Roskilde St.
+
     // Get current date and time
     let now = new Date();
 
@@ -222,7 +277,6 @@ function getData() {
 
     // Format time to HH:MM
     let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-    console.log(time);
 
     // Fetch trip data from the Rejseplanen API
     fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
@@ -243,7 +297,7 @@ function getData() {
                 
 
                 // Stop processing trips after the first three
-                if (index > 3) {
+                if (index > 2) {
                     return;
                 }
 
@@ -265,6 +319,16 @@ function getData() {
                     lastIndex++;
                 }
 
+                let oName = origin.getAttribute('name');
+                if (oName.endsWith('.')) {
+                    oName = oName.slice(0, -1);
+                }
+
+                let dName = destination.getAttribute('name');
+                if (dName.endsWith('.')) {
+                    dName = dName.slice(0, -1);
+                }
+
                   
                 const tripClass = window.innerWidth <= 768 ? 'trip-mobile' : 'trip-desktop';
                 const originDelayClass = origin.getAttribute('rtTime') ? '' : 'transparent';
@@ -276,7 +340,7 @@ function getData() {
                 const tripElement = `
                 <div id="trips" class="${tripClass} trip trip-${index + 1}">
                     <div class="title_time">
-                        <h2 class="station">${origin.getAttribute('name').slice(0, -1)}:</h2>
+                        <h2 class="station origin-station">${oName}:</h2>
                         <span class="tooltip-container">
                             <span class="delay-indicator ${originDelayClass}">+${(typeof originDelayText === 'string' && originDelayText.match(/\d+/g) && originDelayText.match(/\d+/g).join('')) || '0'}</span>
                             <i class="fa-regular fa-clock ${originDelayClass}"></i>
@@ -292,7 +356,7 @@ function getData() {
                     </div>
 
                     <div class="title_time">
-                        <h2 class="station">${destination.getAttribute('name').slice(0, -1)}:</h2>
+                        <h2 class="station destination-station">${dName}:</h2>
                         <span class="tooltip-container">
                             <span class="delay-indicator ${destinationDelayClass}">+${(typeof destinationDelayText === 'string' && destinationDelayText.match(/\d+/g) && destinationDelayText.match(/\d+/g).join('')) || '0'}</span>
                             <i class="fa-regular fa-clock ${destinationDelayClass}"></i>
@@ -314,7 +378,6 @@ function getData() {
             
             // Applies warning div if there are less than 3 trips
             const warningDivSelector = window.innerWidth <= 768 ? '.warning-mobile' : '.warning-desktop';
-            console.log(warningDivSelector);
             const warningDiv = document.querySelector(warningDivSelector);
             if (lastIndex < 3) {
                 warningDiv.classList.remove('hidden');
@@ -327,13 +390,35 @@ function getData() {
             trips.forEach((trip, index) => {
                 let destination = trip.getElementsByTagName('Destination')[0];
                 let destinationName = destination.getAttribute('name');
-            
+                
                 if (destinationName !== destName) {
-                    // Remove the 'hidden' class from .multipleStops of the specific trip
-                    document.querySelector(`.trip-${index + 1} .multipleStops`).classList.remove('hidden');
-                    console.log('Removed hidden class: ' + destinationName);
+            
+                    // Get the element
+                    let element = document.querySelector(`.trip-${index + 1} .multipleStops`);
+            
+                    // If the element exists, remove the 'hidden' class
+                    if (element) {
+                        element.classList.remove('hidden');
+                    }
                 }
             });
+
+            // Get a reference to all script tags
+            const scriptTags = document.querySelectorAll('script');
+
+            // Remove any script tag whose src starts with 'search.js'
+            scriptTags.forEach(scriptTag => {
+                if (scriptTag.src.includes('search.js')) {
+                    scriptTag.remove();
+                }
+            });
+
+            setTimeout(() => {
+                const script = document.createElement('script');
+                script.src = './js/search.js?' + new Date().getTime(); // Add a cache-busting query parameter
+                script.type = 'module';
+                document.body.appendChild(script);
+            }, 100);
             
         })
         .catch(error => console.error('Error:', error));
@@ -356,6 +441,13 @@ refreshButton.addEventListener('click', function() {
         this.removeAttribute('disabled');
         isRefreshing = false;
     }, 3000);
+});
+
+const stationSelector = document.querySelector('.origin-station');
+
+stationSelector.addEventListener('click', function() {
+    console.log('Clicked');
+    searchStation();
 });
 
 // Finds refresh button and adds event listener to it
@@ -422,7 +514,12 @@ function swap() {
     destId = swappedValues.destId;
     destName = swappedValues.destName;
 
-    getData(originId, originName, destId, destName);
+    localStorage.setItem('originId', swappedValues.originId);
+    localStorage.setItem('originName', swappedValues.originName);
+    localStorage.setItem('destId', swappedValues.destId);
+    localStorage.setItem('destName', swappedValues.destName);
+    //getData(originId, originName, destId, destName);
+    getData();
 }
 
 // Calculates the distance between two stations
@@ -498,3 +595,12 @@ window.addEventListener('resize', function() {
 if (window.navigator.standalone) {
     document.body.classList.add('apple-mobile-web-app');
 }
+
+if(navigator.userAgent.indexOf('iPhone') > -1 )
+{
+    document
+      .querySelector("[name=viewport]")
+      .setAttribute("content","width=device-width, initial-scale=1, maximum-scale=1");
+}
+
+export { getData };

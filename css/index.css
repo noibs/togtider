@@ -7,6 +7,7 @@
   body {
     font-size: 0.7em;
     overflow: hidden;
+    overflow-y: hidden;
   }
   .title i {
     font-size: 2em !important;
@@ -72,6 +73,14 @@
   .multipleStops i {
     margin: 0 0.4em !important;
   }
+  #searchGroup {
+    margin-top: 5px !important;
+    transform: translate(-23px, 0) !important;
+    z-index: 50;
+  }
+  #searchBox, #resultsContainer {
+    font-size: 1.5em !important;
+  }
 }
 @media (min-width: 769px) {
   body {
@@ -82,7 +91,6 @@
     min-height: 100vh;
     margin: 0;
     overflow: hidden;
-    transition: all 0.5s ease;
   }
   .title i {
     margin-bottom: 2vh !important;
@@ -93,6 +101,9 @@
   }
   .delete {
     display: inline-block;
+  }
+  #searchBox, #resultsContainer {
+    font-size: 1.2em !important;
   }
 }
 .title {
@@ -194,6 +205,7 @@ h1 {
 .trip .station {
   padding-top: 0 !important;
   margin: 0 !important;
+  position: relative;
 }
 .trip span {
   display: flex;
@@ -207,6 +219,15 @@ h1 {
   font-weight: 400;
   padding-top: 0 !important;
   margin: 0 !important;
+}
+
+a {
+  color: #3b82f6;
+  font-weight: 700;
+}
+
+#no_results {
+  color: black !important;
 }
 
 .title_time {
@@ -227,6 +248,10 @@ i {
 
 .apple-mobile-web-app {
   font-size: 0.7em !important;
+}
+.apple-mobile-web-app body,
+.apple-mobile-web-app html {
+  position: fixed;
 }
 .apple-mobile-web-app button {
   margin-top: 3vh !important;
@@ -338,6 +363,9 @@ i {
 .darkmode {
   background-color: #1e1e22 !important;
 }
+.darkmode #result {
+  color: black !important;
+}
 .darkmode .trip {
   background-color: #242429 !important;
   border: 1px solid #303035 !important;
@@ -360,4 +388,51 @@ i {
   -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
   -moz-user-select: none; /* Old versions of Firefox */ /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+#searchBox,
+#resultsContainer {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 50;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}
+
+#searchBox {
+  border-radius: 10px;
+}
+
+#searchBox:focus {
+  outline: none;
+}
+
+#searchGroup {
+  margin-top: 10px;
+  position: absolute;
+  opacity: 0;
+}
+
+#searchGroup.visible {
+  opacity: 1 !important;
+}
+
+#resultsContainer {
+  position: absolute;
+  width: 100%;
+  margin-top: 5px;
+  display: none;
+  border-radius: 10px;
+}
+
+#result {
+  margin: 0;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #efefef;
+  padding: 5px;
+  border-radius: 7px;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
 }/*# sourceMappingURL=index.css.map */

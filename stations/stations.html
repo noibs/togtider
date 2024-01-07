@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Station Data</title>
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: Inter, sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+            margin: 20px;
+            margin-bottom: 0;
+        }
+
+        i {
+            font-size: 1em;
+            margin: 10px;
+            color:#3b82f6;
+        }
+
+        p {
+            /* width: 100%; */
+            text-align: center;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            color: #3b82f6;
+            font-weight: 700;
+        }
+
+        #stations {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .station {
+            margin: 20px;
+            flex: 1 0 40%; /* grow | shrink | base width */
+            box-sizing: border-box;
+            max-width: 300px; /* adjust this value as needed */
+        }
+
+        .station-name {
+            font-weight: bold;
+        }
+
+        .station-id {
+            color: #888;
+        }
+
+        .station-container {
+            border: 1px solid #ccc;
+            padding: 30px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1><i class="fa-solid fa-train-track"></i>Understøttede stationer:</h1>
+    <div id="stations"></div>
+    <p>Hvis du synes der mangler en station, så venligst opret en "issue" på Github <a href="https://github.com/noibs/togtider/issues" target=”_blank>her</a>.</p>
+    <script>
+        fetch('stations.json')
+            .then(response => response.json())
+            .then(data => {
+                const stationsDiv = document.getElementById('stations');
+                data.forEach(station => {
+                    let stationName = station.stationName;
+                    if (stationName.endsWith('.')) {
+                        stationName = stationName.slice(0, -1);
+                    }
+                    const stationDiv = document.createElement('div');
+                    stationDiv.className = 'station';
+                    stationDiv.innerHTML = `
+                    <div class="station-container">
+                        <div class="station-name">${stationName}:</div>
+                        <div class="station-id">ID: ${station.stationId}</div>
+                    </div>
+                    `;
+                    stationsDiv.appendChild(stationDiv);
+                });
+            });
+    </script>
+</body>
+</html>

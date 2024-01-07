@@ -1,0 +1,202 @@
+[
+    {
+        "stationName": "Borup St.",
+        "data": {
+            "stationId": "5426",
+            "coords": {
+                "lat": 55.4959,
+                "lon": 11.9778
+            }
+        }
+    },
+    {
+        "stationName": "Roskilde St.",
+        "data": {
+            "stationId": "6555",
+            "coords": {
+                "lat": 55.6401,
+                "lon": 12.0804
+            }
+        }
+    },
+    {
+        "stationName": "Næstved St.",
+        "data": {
+            "stationId": "8600810",
+            "coords": {
+                "lat": 55.231244,
+                "lon": 11.767051
+            }
+        }
+    },
+    {
+        "stationName": "Ringsted St.",
+        "data": {
+            "stationId": "39761",
+            "coords": {
+                "lat": 55.438813,
+                "lon": 11.785317
+            }
+        }
+    },
+    {
+        "stationName": "Viby St.",
+        "data": {
+            "stationId": "8600615",
+            "coords": {
+                "lat": 55.549605,
+                "lon": 12.024493
+            }
+        }
+    },
+    {
+        "stationName": "Lejre St.",
+        "data": {
+            "stationId": "8650715",
+            "coords": {
+                "lat": 55.604709,
+                "lon": 11.971492
+            }
+        }
+    },
+    {
+        "stationName": "Hvalsø St.",
+        "data": {
+            "stationId": "4294",
+            "coords": {
+                "lat": 55.595576,
+                "lon": 11.860637
+            }
+        }
+    },
+    {
+        "stationName": "Køge St.",
+        "data": {
+            "stationId": "8600803",
+            "coords": {
+                "lat": 55.457547,
+                "lon": 12.186334
+            }
+        }
+    },
+    {
+        "stationName": "Trekroner St.",
+        "data": {
+            "stationId": "4359",
+            "coords": {
+                "lat": 55.648343,
+                "lon": 12.131914
+            }
+        }
+    },
+    {
+        "stationName": "Hedehusene St.",
+        "data": {
+            "stationId": "53435",
+            "coords": {
+                "lat": 55.648676,
+                "lon": 12.198829
+            }
+        }
+    },
+    {
+        "stationName": "Høje Taastrup St.",
+        "data": {
+            "stationId": "4527",
+            "coords": {
+                "lat": 55.648487,
+                "lon": 12.269709
+            }
+        }
+    },
+    {
+        "stationName": "Valby St.",
+        "data": {
+            "stationId": "8600624",
+            "coords": {
+                "lat": 55.663993,
+                "lon": 12.514450
+            }
+        }
+    },
+    {
+        "stationName": "København H",
+        "data": {
+            "stationId": "8600626",
+            "coords": {
+                "lat": 55.673063,
+                "lon": 12.565562
+            }
+        }
+    },
+        {
+        "stationName": "Nørreport St.",
+        "data": {
+            "stationId": "8600646",
+            "coords": {
+                "lat": 55.683455,
+                "lon": 12.571801
+            }
+        }
+    },
+    {
+        "stationName": "Østerport St.",
+        "data": {
+            "stationId": "8600650",
+            "coords": {
+                "lat": 55.692498,
+                "lon": 12.587784
+            }
+        }
+    },
+    {
+        "stationName": "Hellerup St.",
+        "data": {
+            "stationId": "53473",
+            "coords": {
+                "lat": 55.730666,
+                "lon": 12.568052
+            }
+        }
+    },
+    {
+        "stationName": "Klampenborg St.",
+        "data": {
+            "stationId": "6983",
+            "coords": {
+                "lat": 55.777302,
+                "lon": 12.587415
+            }
+        }
+    },
+    {
+        "stationName": "Helsingør St.",
+        "data": {
+            "stationId": "4613",
+            "coords": {
+                "lat": 56.033072,
+                "lon": 12.612702
+            }
+        }
+    },
+    {
+        "stationName": "Sorø St.",
+        "data": {
+            "stationId": "8600608",
+            "coords": {
+                "lat": 55.419343,
+                "lon": 11.569243
+            }
+        }
+    },
+    {
+        "stationName": "Slagelse St.",
+        "data": {
+            "stationId": "8600605",
+            "coords": {
+                "lat": 55.407306,
+                "lon": 11.348998
+            }
+        }
+    }
+]

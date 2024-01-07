@@ -2,3 +2,4 @@
 media/icon.psd
 .idea/
 manifest.json
+/stations/*.py
