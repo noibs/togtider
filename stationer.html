@@ -68,7 +68,7 @@
     <div id="stations"></div>
     <p>Hvis du synes der mangler en station, så venligst opret en "issue" på Github <a href="https://github.com/noibs/togtider/issues" target=”_blank>her</a>.</p>
     <script>
-        fetch('stations.json')
+        fetch('./data/stations/stations.json')
             .then(response => response.json())
             .then(data => {
                 const stationsDiv = document.getElementById('stations');
@@ -82,7 +82,7 @@
                     stationDiv.innerHTML = `
                     <div class="station-container">
                         <div class="station-name">${stationName}:</div>
-                        <div class="station-id">ID: ${station.stationId}</div>
+                        <div class="station-id">ID: ${station.data.stationId}</div>
                     </div>
                     `;
                     stationsDiv.appendChild(stationDiv);

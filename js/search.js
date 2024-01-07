@@ -2,7 +2,7 @@ import { getData } from './handler.js';
 var stations = [];
 
 // Fetch the data from stations.json
-fetch('../stations/stations.json')
+fetch('../data/stations/stations.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -96,7 +96,7 @@ var dButton = document.querySelector('.destination-station');
                     // If there are no results, display a message
                     var messageElement = document.createElement('p');
                     //messageElement.textContent = 'No results found. Look at list of supported stations.';
-                    messageElement.innerHTML = 'Ingen resultater. Tjek listen over understøttede stationer <a target=”_blank href="togtider.ellioott.me/stationer">her</a>.';
+                    messageElement.innerHTML = 'Ingen resultater. Tjek listen over understøttede stationer <a target=”_blank href="/stationer">her</a>.';
                     messageElement.id = 'no_results';
                     resultsContainer.appendChild(messageElement);
                     resultsContainer.style.display = 'block';
