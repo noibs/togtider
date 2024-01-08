@@ -5,6 +5,7 @@
     <title>Togtider</title>
     <link rel="stylesheet" href="./css/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Togtider">
@@ -12,17 +13,17 @@
     <link rel="icon" href="media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
     <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.min.js"></script>
-
-    
 </head>
 <body class="noselect">
     <div class="container">
+
         <div class="title">
             <i class="fa-solid fa-train-subway" onclick=""></i>
             <h1 id="swap">Togtider</h1>
         </div>
         
         <div id="tripsContainer" class="tripsContainer">
+
         <div class="trip-desktop trip ${index + 1} delete">
             <div class="title_time">
                 <h2 class="station origin-station">Station...</h2>
@@ -33,6 +34,7 @@
                 </span>
             </div>
             <p class="track">Spor: ...</p>
+
             <div class="arrow_text">
                 <i class="fa-solid fa-angles-down"></i>
                 <div class="multipleStops hidden">
@@ -40,12 +42,14 @@
                     <p class=""> Ruten indeholder flere skift.</p>
                 </div>
             </div>
+
             <div class="title_time">
                 <h2 class="station destination-station">Station...</h2>
                 <h2 id="title_time">...</h2>
             </div>
             <p class="track">Spor: ...</p>
         </div>
+
         <div class="trip-desktop trip ${index + 1} delete">
             <div class="title_time">
                 <h2 class="station">Station...</h2>
@@ -61,6 +65,7 @@
             </div>
             <p class="track">Spor: ...</p>
         </div>
+
         <div class="trip-desktop trip ${index + 1} delete">
             <div class="title_time">
                 <h2 class="station">Station...</h2>
@@ -74,10 +79,13 @@
             </div>
             <p class="track">Spor: ...</p>
         </div>
-    </div>
-        <div class="refresh">
-            <button id="refresh" class="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+
         </div>
+
+            <div class="refresh">
+                <button id="refresh" class="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+            </div>
+            
         <div class="warning warning-desktop hidden">
             <i class="fa-regular fa-triangle-exclamation"></i> <br>
             <p>Der vises færre resultater end normalt.<br id="extra-break"><br>Dobbelttjek Rejseplanen før du rejser.</p>
@@ -92,7 +100,7 @@
         </div>
     </div>
     
-
+    <!--Load scripts-->
     <script src="js/handler.js" type="module"></script>
     <script src="js/anims.js"></script>
 </body>

@@ -30,6 +30,10 @@
     margin: auto;
     margin-left: -50%;
   }
+  .tripsContainer .trip {
+    margin-bottom: 0 !important;
+    max-width: none !important;
+  }
   .trip {
     margin: 1vh auto !important;
   }
@@ -76,6 +80,7 @@
   #searchGroup {
     margin-top: 5px !important;
     transform: translate(-34px, 0) !important;
+    transition: all 0.25s ease !important;
     z-index: 50;
   }
   #searchBox, #resultsContainer {
@@ -395,6 +400,7 @@ i {
   border: 1px solid #ccc;
   padding: 10px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
 #searchBox {
@@ -408,20 +414,31 @@ i {
 #searchGroup {
   margin-top: 10px;
   position: absolute;
+  transition: all 0.2s ease;
+  z-index: 100;
   opacity: 0;
 }
 
 #searchGroup.visible {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 #resultsContainer {
   position: absolute;
   width: 100%;
   margin-top: 5px;
-  display: none;
+  display: block;
   border-radius: 10px;
   padding-bottom: 0;
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 0.15s ease, transform 0.2s ease;
+  z-index: 49;
+}
+
+#resultsContainer.visible {
+  opacity: 1;
+  transform: translateY(0px);
 }
 
 #result {
@@ -434,6 +451,12 @@ i {
   padding-left: 10px;
   border-radius: 7px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+#result:hover {
+  background-color: #e4e4e7;
+  scale: 1.02;
 }
 
 #no_results {

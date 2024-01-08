@@ -84,6 +84,12 @@ var dButton = document.querySelector('.destination-station');
             let originalTarget = event.target;
             searchBox.addEventListener('input', (event) => {
                 var results = searchStation(event.target.value);
+
+                let visible = resultsContainer.classList.contains('visible');
+
+                if (!visible) {
+                    resultsContainer.classList.add('visible');
+                }
     
                 // Clear the previous results
                 resultsContainer.innerHTML = '';
@@ -182,6 +188,6 @@ document.addEventListener('click', (event) => {
         searchGroup.classList.remove('visible');
         setTimeout(() => {
             searchGroup.remove();
-        }, 100);
+        }, 500);
     }
 });

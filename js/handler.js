@@ -139,7 +139,6 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
 
             if (destinationName !== destName) {
                 isDifferentDestination = true;
-                console.log('Different destination');
             }
             // Push the data to the tripData array
             tripData.push({
@@ -164,11 +163,9 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
         const warningDiv = document.querySelector(warningDivSelector);
         if (tripData.length < 3) {
                 warningDiv.classList.remove('hidden');
-                console.log(tripData.length);
                 lastIndex = tripData.length;
             } else {
                 warningDiv.classList.add('hidden');
-                console.log(tripData.length);
                 lastIndex = tripData.length;
             }
 
@@ -212,6 +209,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 removePlaceholder()
                 deleteElements();
                 animateTime();
+                charCount();
                 container.innerHTML += tripElement;
 
                 // Allow refreshing again
@@ -225,7 +223,6 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 if (destinationName !== destName) {
                     // Remove the 'hidden' class from .multipleStops of the specific trip
                     document.querySelector(`.trip-${index + 1} .multipleStops`).classList.remove('hidden');
-                    console.log('Removed hidden class');
                 }
             });
 
@@ -367,6 +364,8 @@ function getData() {
                     <p class="track">${destinationTrackText}</p>
                 </div>
                 `;
+
+                charCount();
                 newContent += tripElement;
 
 
@@ -381,10 +380,8 @@ function getData() {
             const warningDiv = document.querySelector(warningDivSelector);
             if (lastIndex < 3) {
                 warningDiv.classList.remove('hidden');
-                console.log(lastIndex);
             } else {
                 warningDiv.classList.add('hidden');
-                console.log(lastIndex);
             }
 
             trips.forEach((trip, index) => {
@@ -441,13 +438,6 @@ refreshButton.addEventListener('click', function() {
         this.removeAttribute('disabled');
         isRefreshing = false;
     }, 3000);
-});
-
-const stationSelector = document.querySelector('.origin-station');
-
-stationSelector.addEventListener('click', function() {
-    console.log('Clicked');
-    searchStation();
 });
 
 // Finds refresh button and adds event listener to it
@@ -552,6 +542,34 @@ function changeTheme() {
     var element = document.body;
     element.classList.toggle("darkmode");
     localStorage.setItem('theme', element.classList.contains("darkmode") ? "darkmode" : "lightmode");
+}
+
+// Gets character count
+function charCount() {
+    if (window.innerWidth <= 768) {
+        // Get all the h2 elements inside .trip
+        let tripHeaders = document.querySelectorAll('.trip h2');
+        
+        let tooLong = false;
+        // Loop through each h2 element
+        tripHeaders.forEach(header => {
+            // Check if the text length surpasses 13
+            if (header.textContent.length > 13) {
+                tooLong = true;
+            }
+        });
+
+        if (tooLong) {
+            // If any h2 is too long, change the max-width of all .trip elements
+            let style = document.createElement('style');
+            style.innerHTML = `
+                .trip {
+                    width: 60vw !important;
+                }
+        `;
+            document.head.appendChild(style);
+        }
+    }
 }
 
 // Loads your preferred theme
