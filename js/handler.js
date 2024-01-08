@@ -7,7 +7,7 @@ const borupId = '5426'; // Id for Borup St.
 const roskilde = 'Roskilde St.'; // Name for Roskilde St.
 const borup = 'Borup St.'; // Name for Borup St.
 
-const subtractedMinutes = 0; // Subtract 15 minutes from current time
+const subtractedMinutes = 5; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
 

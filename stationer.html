@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Station Data</title>
+    <title>Understøttede Stationer</title>
+    <link rel="icon" href="media/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        @media screen and (max-width: 768px) {
+            * {
+                font-size: 1em;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin: 0 !important;
+
+                i {
+                    margin-left: 0;
+                }
+            }
+        }
+
         body {
             font-family: Inter, sans-serif;
             overflow-x: hidden;
@@ -15,18 +33,21 @@
             text-align: center;
             margin: 20px;
             margin-bottom: 0;
+            z-index: 100;
         }
 
         i {
             font-size: 1em;
             margin: 10px;
             color:#3b82f6;
+            z-index: 100;
         }
 
         p {
             /* width: 100%; */
             text-align: center;
             margin: 0 auto;
+            margin-bottom: 30px;
             padding: 0 20px;
         }
 
@@ -60,11 +81,12 @@
             border: 1px solid #ccc;
             padding: 30px;
             border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.03);
         }
     </style>
 </head>
 <body>
-    <h1><i class="fa-solid fa-train-track"></i>Understøttede stationer:</h1>
+    <h1><a href="https://togtider.ellioott.me/"><i class="fa-solid fa-train-track"></i></a>Understøttede stationer:</h1>
     <div id="stations"></div>
     <p>Hvis du synes der mangler en station, så venligst opret en "issue" på Github <a href="https://github.com/noibs/togtider/issues" target=”_blank>her</a>.</p>
     <script>

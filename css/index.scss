@@ -98,12 +98,12 @@ $accent-color: #3b82f6;
 
     #searchGroup {
         margin-top: 5px !important;
-        transform: translate(-23px, 0) !important;
+        transform: translate(-34px, 0) !important;
         z-index: 50;
     }
 
     #searchBox, #resultsContainer {
-        font-size: 1.5em !important;
+        font-size: 1.7em !important;
     }
 }
 
@@ -276,10 +276,6 @@ h1 {
 a {
     color: #3b82f6;
     font-weight: 700;
-}
-
-#no_results {
-    color: black !important;
 }
 
 .title_time {
@@ -507,15 +503,24 @@ i {
     margin-top: 5px;
     display: none;
     border-radius: 10px;
+    padding-bottom: 0;
 }
 
 #result {
     margin: 0;
     margin-bottom: 10px;
-    //border-bottom: 2px solid #ccc;
+    border: 1px solid #ccc;
     cursor: pointer;
     background-color: #efefef;
     padding: 5px;
+    padding-left: 10px;
     border-radius: 7px;
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+#no_results {
+    color: black !important;
+    margin-top: 0;
+    margin-bottom: 15px;
+
 }
