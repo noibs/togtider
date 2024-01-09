@@ -7,7 +7,7 @@ const borupId = '5426'; // Id for Borup St.
 const roskilde = 'Roskilde St.'; // Name for Roskilde St.
 const borup = 'Borup St.'; // Name for Borup St.
 
-const subtractedMinutes = 15; // Subtract 15 minutes from current time
+const subtractedMinutes = 0; // Subtract 15 minutes from current time
 
 const container = document.getElementById('tripsContainer'); // Get the trips container
 
@@ -276,7 +276,7 @@ function getData() {
     let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
     // Fetch trip data from the Rejseplanen API
-    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
+    return fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
             
@@ -430,8 +430,10 @@ refreshButton.addEventListener('click', function() {
     isRefreshing = true;
     this.setAttribute('disabled', 'disabled');
     refreshIcon();
-    refresh();
-    setTimeout(getData, 0);
+    hide();
+    getData().then(() => {
+        setTimeout(show, 100);
+    });
 
     setTimeout(() => {
         
@@ -447,9 +449,12 @@ swapButton.addEventListener('click', function() {
     if (swapRefreshing) return;
     swapRefreshing = true;
     this.setAttribute('disabled', 'disabled');
-    refresh();
+    //refresh();
     swapAnim();
-    swap();
+    hide();
+    swap().then(() => {
+    setTimeout(show, 300)
+    });
 
     setTimeout(() => {
         
@@ -498,18 +503,26 @@ function swapOriginAndDestination(originId, originName, destId, destName) {
 }
 
 function swap() {
-    let swappedValues = swapOriginAndDestination(originId, originName, destId, destName);
-    originId = swappedValues.originId;
-    originName = swappedValues.originName;
-    destId = swappedValues.destId;
-    destName = swappedValues.destName;
+    return new Promise((resolve, reject) => {
+        try {
+            let swappedValues = swapOriginAndDestination(originId, originName, destId, destName);
+            originId = swappedValues.originId;
+            originName = swappedValues.originName;
+            destId = swappedValues.destId;
+            destName = swappedValues.destName;
 
-    localStorage.setItem('originId', swappedValues.originId);
-    localStorage.setItem('originName', swappedValues.originName);
-    localStorage.setItem('destId', swappedValues.destId);
-    localStorage.setItem('destName', swappedValues.destName);
-    //getData(originId, originName, destId, destName);
-    getData();
+            localStorage.setItem('originId', swappedValues.originId);
+            localStorage.setItem('originName', swappedValues.originName);
+            localStorage.setItem('destId', swappedValues.destId);
+            localStorage.setItem('destName', swappedValues.destName);
+            //getData(originId, originName, destId, destName);
+            getData();
+
+            resolve(); // Resolve the promise when the function is done
+        } catch (error) {
+            reject(error); // Reject the promise if there's an error
+        }
+    });
 }
 
 // Calculates the distance between two stations
