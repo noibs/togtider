@@ -1,9 +1,8 @@
+// Default ID's:
 const roskildeSt = { lat: 55.6401, lon: 12.0804 }; // Roskilde St. coordinates
 const borupSt = { lat: 55.4959, lon: 11.9778 }; // Borup St. coordinates
-
 const roskildeId = '6555'; // Id for Roskilde St.
 const borupId = '5426'; // Id for Borup St.
-
 const roskilde = 'Roskilde St.'; // Name for Roskilde St.
 const borup = 'Borup St.'; // Name for Borup St.
 
@@ -234,6 +233,7 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
         .catch(error => console.error('Error:', error));
         
     }, error => {
+        // If the user denies access to their location, use the default values
         originId = borupId; // Id for Borup St.
         originName = borup; // Name for Borup St.
         destId = roskildeId; // Id for Roskilde St.
@@ -242,8 +242,10 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
         isRefreshing = false;
         swapRefreshing = false;
         container.innerHTML = '';
-        refresh();
-        getData();
+        hide();
+        getData().then(() => {
+            show();
+        });
 
     });
 
@@ -275,8 +277,9 @@ function getData() {
     // Format time to HH:MM
     let time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
+    return new Promise((resolve, reject) => {
     // Fetch trip data from the Rejseplanen API
-    return fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
+    fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&destId=${destId}&useBus=0&time=${time}`)
         .then(response => response.text())
         .then(data => {
             
@@ -384,6 +387,7 @@ function getData() {
                 warningDiv.classList.add('hidden');
             }
 
+            // Adds .multipleStops class to trips with multiple stops
             trips.forEach((trip, index) => {
                 let destination = trip.getElementsByTagName('Destination')[0];
                 let destinationName = destination.getAttribute('name');
@@ -399,6 +403,8 @@ function getData() {
                     }
                 }
             });
+
+            resolve('done')
 
             // Get a reference to all script tags
             const scriptTags = document.querySelectorAll('script');
@@ -418,7 +424,8 @@ function getData() {
             }, 100);
             
         })
-        .catch(error => console.error('Error:', error));
+    })
+    .catch(error => console.error('Error:', error));
     
 }
 
@@ -429,14 +436,13 @@ refreshButton.addEventListener('click', function() {
     if (isRefreshing) return;
     isRefreshing = true;
     this.setAttribute('disabled', 'disabled');
-    refreshIcon();
+    let animation = refreshIcon();
     hide();
     getData().then(() => {
-        setTimeout(show, 100);
+        show();
     });
 
     setTimeout(() => {
-        
         this.removeAttribute('disabled');
         isRefreshing = false;
     }, 3000);
@@ -449,11 +455,10 @@ swapButton.addEventListener('click', function() {
     if (swapRefreshing) return;
     swapRefreshing = true;
     this.setAttribute('disabled', 'disabled');
-    //refresh();
     swapAnim();
     hide();
     swap().then(() => {
-    setTimeout(show, 300)
+        show();
     });
 
     setTimeout(() => {
@@ -483,6 +488,8 @@ themeButton.addEventListener('click', function() {
     }, 2000);
 });
 
+
+// Swaps origin and destination
 function swapOriginAndDestination(originId, originName, destId, destName) {
     let tempId = originId;
     let tempName = originName;
@@ -502,6 +509,7 @@ function swapOriginAndDestination(originId, originName, destId, destName) {
     
 }
 
+// Swaps origin and destination and refreshes the trip data
 function swap() {
     return new Promise((resolve, reject) => {
         try {
@@ -515,15 +523,16 @@ function swap() {
             localStorage.setItem('originName', swappedValues.originName);
             localStorage.setItem('destId', swappedValues.destId);
             localStorage.setItem('destName', swappedValues.destName);
-            //getData(originId, originName, destId, destName);
-            getData();
 
-            resolve(); // Resolve the promise when the function is done
+            getData().then(() => {
+                resolve('done'); // Resolve the promise when getData() is done
+            });
         } catch (error) {
             reject(error); // Reject the promise if there's an error
         }
     });
 }
+
 
 // Calculates the distance between two stations
 function getDistance(location1, location2) {
@@ -627,6 +636,7 @@ if (window.navigator.standalone) {
     document.body.classList.add('apple-mobile-web-app');
 }
 
+// Applies special CSS class if the website is opened in Safari on iOS
 if(navigator.userAgent.indexOf('iPhone') > -1 )
 {
     document

@@ -56,8 +56,6 @@ function animateTime() {
 
 // Refresh animation
 function refresh() {
-
-    
     anime({
         targets: '.tripsContainer',
         opacity: ['100%', '0%'],
@@ -67,13 +65,35 @@ function refresh() {
     })
 }
 
+// Refresh hide animation
+function hide() {
+    anime({
+        targets: '.tripsContainer',
+        opacity: ['100%', '0%'],
+        duration: 125,
+        easing: 'easeOutQuad'
+    })
+}
+
+// Refresh show animation
+function show() {
+    anime({
+        targets: '.tripsContainer',
+        opacity: ['0%', '100%'],
+        duration: 125,
+        easing: 'easeOutQuad'
+    })
+}
+
 // Refresh button loading animation
 function refreshIcon() {
     anime({
         targets: '.refresh i',
-        rotate: ['0deg', '720deg'],
-        duration: 2000,
-        easing: 'spring(1, 80, 15, 5)'
+        rotate: ['0deg', '930deg'],
+        duration: 1000,
+        easing: 'easeOutQuart'
+        //easing: 'spring(1, 80, 15, 5)'
+        
     })
 }
 

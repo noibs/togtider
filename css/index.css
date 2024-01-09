@@ -365,7 +365,18 @@ i {
   background-color: #1e1e22 !important;
 }
 .darkmode #result {
-  color: black !important;
+  background-color: #303035;
+  border: 1px solid #434349 !important;
+}
+.darkmode #result:hover {
+  background-color: #434349;
+}
+.darkmode #searchBox,
+.darkmode #resultsContainer {
+  background-color: #242429 !important;
+  border: 1.75px solid #303035 !important;
+  color: white !important;
+  box-shadow: 0 0 50px rgba(169, 169, 169, 0.03) !important;
 }
 .darkmode .trip {
   background-color: #242429 !important;

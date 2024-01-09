@@ -432,8 +432,22 @@ i {
     background-color: #1e1e22 !important;
 
     #result {
-        color: black !important;
+        background-color: #303035;
+        border: 1px solid #434349 !important;
+
+        &:hover {
+            background-color: #434349;
+        }
     }
+
+    #searchBox,
+    #resultsContainer {
+        background-color: #242429 !important;
+        border: 1.75px solid #303035 !important;
+        color: white !important;
+        box-shadow: 0 0 50px rgba(169, 169, 169, 0.03) !important;
+    }
+    
 
     .trip {
         background-color: #242429 !important;

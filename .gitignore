@@ -1,6 +1,5 @@
 *.bak
+*.py
 media/icon.psd
 .idea/
 manifest.json
-/data/stations/*.py
-js/handler copy.js

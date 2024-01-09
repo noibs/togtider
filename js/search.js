@@ -23,10 +23,6 @@ function searchStation(query) {
     .slice(0, 5);
 }
 
-var oButton = document.querySelector('.origin-station');
-var dButton = document.querySelector('.destination-station');
-
-
 // Event listener for the search box
 ['.origin-station', '.destination-station'].forEach(selector => {
     document.querySelectorAll(selector).forEach(element => {
@@ -76,21 +72,80 @@ var dButton = document.querySelector('.destination-station');
                 searchGroup.classList.add('visible');
             }, 100);
     
-            // // Add the search box and results container to the DOM
-            // document.body.appendChild(searchBox);
-            // document.body.appendChild(resultsContainer);
+            // Add keydown event listener to the searchBox
+            searchBox.addEventListener('keydown', (event) => {
+                var results = searchStation(event.target.value);
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent form submission
+                    if (results.length > 0) {
+                        let result = results[0];
+
+                        if (originalTarget.matches('.origin-station')) {
+
+                            if (localStorage.getItem('destId') === result.data.stationId) {
+                                console.error('Origin and destination stations cannot be the same');
+                                searchGroup.remove();
+                                return;
+                            }
+
+                            // Overwrite local storage
+                            localStorage.setItem('originId', result.data.stationId);
+                            localStorage.setItem('originName', result.stationName);
+                            localStorage.setItem('oLat', result.data.coords.lat);
+                            localStorage.setItem('oLon', result.data.coords.lon);
+                            
+
+                            hide();
+                            getData().then(() => {
+                                show();
+                            });
+
+                        } else if (originalTarget.matches('.destination-station')) {
+
+                            if (localStorage.getItem('originId') === result.data.stationId) {
+                                console.error('Origin and destination stations cannot be the same');
+                                searchGroup.remove();
+                                return;
+                            }
+
+                            // Overwrite local storage
+                            localStorage.setItem('destId', result.data.stationId);
+                            localStorage.setItem('destName', result.stationName);
+                            localStorage.setItem('dLat', result.data.coords.lat);
+                            localStorage.setItem('dLon', result.data.coords.lon);
+                            
+                            hide();
+                            getData().then(() => {
+                                show();
+                            });
+                        }
+
+                        searchGroup.remove();
+                    }
+                }
+            });
+
+            // Make Esc key close the search box
+            searchBox.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    searchGroup.classList.remove('visible');
+                    setTimeout(() => {
+                        searchGroup.remove();
+                    }, 300);
+                }
+            });
     
-            // Add event listener for the search box input
+            // Add input event listener to the searchBox
             let originalTarget = event.target;
             searchBox.addEventListener('input', (event) => {
                 var results = searchStation(event.target.value);
 
+                // Check if the results container is visible, if not make it visible
                 let visible = resultsContainer.classList.contains('visible');
-
                 if (!visible) {
                     resultsContainer.classList.add('visible');
                 }
-    
+                
                 // Clear the previous results
                 resultsContainer.innerHTML = '';
                 resultsContainer.style.width = `${searchBox.offsetWidth}px`;
@@ -138,8 +193,10 @@ var dButton = document.querySelector('.destination-station');
                             localStorage.setItem('oLon', station.data.coords.lon);
                             
     
-                            refresh();
-                            getData();
+                            hide();
+                            getData().then(() => {
+                                show();
+                            });
     
                         } else if (originalTarget.matches('.destination-station')) {
     
@@ -155,8 +212,10 @@ var dButton = document.querySelector('.destination-station');
                             localStorage.setItem('dLat', station.data.coords.lat);
                             localStorage.setItem('dLon', station.data.coords.lon);
                             
-                            refresh();
-                            getData();
+                            hide();
+                            getData().then(() => {
+                                show();
+                            });
                         }
     
                         
