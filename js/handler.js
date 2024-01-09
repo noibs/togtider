@@ -208,8 +208,8 @@ fetch(`https://xmlopen.rejseplanen.dk/bin/rest.exe/trip?originId=${originId}&des
                 removePlaceholder()
                 deleteElements();
                 animateTime();
-                charCount();
                 container.innerHTML += tripElement;
+                charCount();
 
                 // Allow refreshing again
                 isRefreshing = false;
@@ -368,9 +368,8 @@ function getData() {
                 </div>
                 `;
 
-                charCount();
                 newContent += tripElement;
-
+                charCount();
 
                 
 
@@ -573,12 +572,19 @@ function charCount() {
         let tripHeaders = document.querySelectorAll('.trip h2');
         
         let tooLong = false;
+        let width = 60;
         // Loop through each h2 element
         tripHeaders.forEach(header => {
             // Check if the text length surpasses 13
             if (header.textContent.length > 13) {
                 tooLong = true;
-            }
+                width = 60;
+
+                if (header.textContent.length > 15) {
+                    width = 70;
+                }
+                
+            } 
         });
 
         if (tooLong) {
@@ -586,7 +592,7 @@ function charCount() {
             let style = document.createElement('style');
             style.innerHTML = `
                 .trip {
-                    width: 60vw !important;
+                    width: ${width}vw !important;
                 }
         `;
             document.head.appendChild(style);
