@@ -70,7 +70,7 @@ function hide() {
     anime({
         targets: '.tripsContainer',
         opacity: ['100%', '0%'],
-        duration: 125,
+        duration: 250,
         easing: 'easeOutQuad'
     })
 }
@@ -80,7 +80,7 @@ function show() {
     anime({
         targets: '.tripsContainer',
         opacity: ['0%', '100%'],
-        duration: 125,
+        duration: 250,
         easing: 'easeOutQuad'
     })
 }
