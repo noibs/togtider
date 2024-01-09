@@ -465,7 +465,7 @@ swapButton.addEventListener('click', function() {
         
         this.removeAttribute('disabled');
         swapRefreshing = false;
-    }, 3000);
+    }, 1500);
 });
 
 
