@@ -29,12 +29,10 @@ let swapRefreshing = true;
 
 // Get the distance to stations from localStorage
 let oLat, oLon, dLat, dLon;
-
-oLat = localStorage.getItem('oLat') || borupSt.lat; // Default latitude for Borup St.
-oLon = localStorage.getItem('oLon') || borupSt.lon; // Default longitude for Borup St.
-dLat = localStorage.getItem('dLat') || roskildeSt.lat; // Default latitude for Roskilde St.
-dLon = localStorage.getItem('dLon') || roskildeSt.lon; // Default longitude for Roskilde St.
-
+oLat = localStorage.getItem('oLat') || borupSt.lat; // Default latitude for Borup St.*/
+oLon = localStorage.getItem('oLon') || borupSt.lon; // Default longitude for Borup St.*/
+dLat = localStorage.getItem('dLat') || roskildeSt.lat; // Default latitude for Roskilde St.*/
+dLon = localStorage.getItem('dLon') || roskildeSt.lon; // Default longitude for Roskilde St.*/
 
 // Get the user's current location
 let originId, destId, originName, destName;
@@ -46,26 +44,28 @@ destId = localStorage.getItem('destId') || roskildeId; // Default Id for Roskild
 destName = localStorage.getItem('destName') || roskilde; // Default name for Roskilde St.*/
 
 navigator.geolocation.getCurrentPosition(position => {
-    const userLocation = { lat: position.coords.latitude, lon: position.coords.longitude };
+    let userLocation = { lat: position.coords.latitude, lon: position.coords.longitude };
 
-    const oCoords = { lat: oLat, lon: oLon };
-    const dCoords = { lat: dLat, lon: dLon };
+    let oCoords = { lat: oLat, lon: oLon };
+    let dCoords = { lat: dLat, lon: dLon };
 
     // Calculate the distance to Roskilde St. and Borup St.
-    const distanceToDest = getDistance(userLocation, dCoords);
-    const distanceToOrigin = getDistance(userLocation, oCoords);
+    let distanceToDest = getDistance(userLocation, dCoords);
+    let distanceToOrigin = getDistance(userLocation, oCoords);
+
+    console.log('Distance to origin: ' + distanceToOrigin);
+    console.log('Origin Coords: ' + oCoords.lat + ', ' + oCoords.lon);
+    console.log('Distance to destination: ' + distanceToDest);
+    console.log('Destination Coords: ' + dCoords.lat + ', ' + dCoords.lon);
+
+    console.log('User location:' + userLocation.lat + ', ' + userLocation.lon)
+    
 
     // Determine the originId and destId based on which location is closer
-    if (distanceToDest > distanceToOrigin) {
-        originId; // Id for Borup St.
-        originName; // Name for Borup St.
-        destId; // Id for Roskilde St.
-        destName; // Name for Roskilde St.
-        oLat; // Latitude for Borup St.
-        oLon; // Longitude for Borup St.
-        dLat; // Latitude for Roskilde St.
-        dLon; // Longitude for Roskilde St.
+    if (distanceToOrigin < distanceToDest) {
+        // Origin is closer than destination, do nothing
     } else {
+        // Destination is closer than origin, swap the values
         let tempId = originId;
         let tempName = originName;
         let tempLat = oLat;
@@ -489,20 +489,32 @@ themeButton.addEventListener('click', function() {
 
 
 // Swaps origin and destination
-function swapOriginAndDestination(originId, originName, destId, destName) {
+function swapOriginAndDestination(originId, originName, destId, destName, oLat, oLon, dLat, dLon) {
     let tempId = originId;
     let tempName = originName;
+
+    let tempLat = oLat;
+    let tempLon = oLon;
 
     originId = destId;
     originName = destName;
 
+    oLat = dLat;
+    oLon = dLon;
+
     destId = tempId;
     destName = tempName;
+    dLat = tempLat;
+    dLon = tempLon;
     return {
         originId: originId,
         originName: originName,
         destId: destId,
-        destName: destName
+        destName: destName,
+        oLat: oLat,
+        oLon: oLon,
+        dLat: dLat,
+        dLon: dLon
     };
 
     
@@ -512,16 +524,24 @@ function swapOriginAndDestination(originId, originName, destId, destName) {
 function swap() {
     return new Promise((resolve, reject) => {
         try {
-            let swappedValues = swapOriginAndDestination(originId, originName, destId, destName);
+            let swappedValues = swapOriginAndDestination(originId, originName, destId, destName, oLat, oLon, dLat, dLon);
             originId = swappedValues.originId;
             originName = swappedValues.originName;
             destId = swappedValues.destId;
             destName = swappedValues.destName;
+            oLat = swappedValues.oLat;
+            oLon = swappedValues.oLon;
+            dLat = swappedValues.dLat;
+            dLon = swappedValues.dLon;
 
             localStorage.setItem('originId', swappedValues.originId);
             localStorage.setItem('originName', swappedValues.originName);
             localStorage.setItem('destId', swappedValues.destId);
             localStorage.setItem('destName', swappedValues.destName);
+            localStorage.setItem('oLat', swappedValues.oLat);
+            localStorage.setItem('oLon', swappedValues.oLon);
+            localStorage.setItem('dLat', swappedValues.dLat);
+            localStorage.setItem('dLon', swappedValues.dLon);
 
             getData().then(() => {
                 resolve('done'); // Resolve the promise when getData() is done
