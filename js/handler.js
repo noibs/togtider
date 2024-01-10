@@ -52,15 +52,7 @@ navigator.geolocation.getCurrentPosition(position => {
     // Calculate the distance to Roskilde St. and Borup St.
     let distanceToDest = getDistance(userLocation, dCoords);
     let distanceToOrigin = getDistance(userLocation, oCoords);
-
-    console.log('Distance to origin: ' + distanceToOrigin);
-    console.log('Origin Coords: ' + oCoords.lat + ', ' + oCoords.lon);
-    console.log('Distance to destination: ' + distanceToDest);
-    console.log('Destination Coords: ' + dCoords.lat + ', ' + dCoords.lon);
-
-    console.log('User location:' + userLocation.lat + ', ' + userLocation.lon)
     
-
     // Determine the originId and destId based on which location is closer
     if (distanceToOrigin < distanceToDest) {
         // Origin is closer than destination, do nothing
