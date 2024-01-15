@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Understøttede Stationer</title>
     <link rel="icon" href="media/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+    <link rel="preconnect" href="https://api.fonts.coollabs.io" crossorigin />
+    <link href="https://api.fonts.coollabs.io/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
     <style>
-        @import url('https://api.fonts.coollabs.io/css2?family=Inter:wght@400;500;700&display=swap');
-
         @media screen and (max-width: 768px) {
             * {
                 font-size: 1em;
@@ -38,7 +39,7 @@
         i {
             font-size: 1em;
             margin: 10px;
-            color:#3b82f6;
+            color: #3b82f6;
             z-index: 100;
         }
 
@@ -68,9 +69,11 @@
 
         .station {
             margin: 20px;
-            flex: 1 0 40%; /* grow | shrink | base width */
+            flex: 1 0 40%;
+            /* grow | shrink | base width */
             box-sizing: border-box;
-            max-width: 300px; /* adjust this value as needed */
+            max-width: 300px;
+            /* adjust this value as needed */
         }
 
         .station-name {
@@ -89,13 +92,16 @@
         }
     </style>
 </head>
+
 <body>
     <div id="title">
-        <h1><a href="https://togtider.ellioott.me/"><i class="fa-solid fa-train-track"></i></a>Understøttede stationer:</h1>
+        <h1><a href="/"><i class="fa-solid fa-train-track"></i></a>Understøttede stationer:
+        </h1>
     </div>
     <div id="supported_stations"></div>
     <div id="stations"></div>
-    <p>Hvis du synes der mangler en station, så venligst opret en "issue" på Github <a href="https://github.com/noibs/togtider/issues" target=”_blank>her</a>.</p>
+    <p>Hvis du synes der mangler en station, så venligst opret en "issue" på Github <a
+            href="https://github.com/noibs/togtider/issues" target=”_blank>her</a>.</p>
     <script>
         fetch('./data/stations/stations.json')
             .then(response => response.json())
@@ -131,4 +137,5 @@
             });
     </script>
 </body>
+
 </html>

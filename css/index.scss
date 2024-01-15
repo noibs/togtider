@@ -1,5 +1,3 @@
-@import url('https://api.fonts.coollabs.io/css2?family=Inter:wght@400;500;700&display=swap');
-
 $accent-color: #3b82f6;
 
 * {
@@ -21,7 +19,8 @@ $accent-color: #3b82f6;
         margin-bottom: 1.4vh !important;
     }
 
-    h1, i {
+    h1,
+    i {
         margin: auto 1vw;
     }
 
@@ -51,7 +50,7 @@ $accent-color: #3b82f6;
     button {
         margin-top: 1.5vh !important;
         width: 50% !important;
-        border-radius: 50vw  !important;
+        border-radius: 50vw !important;
     }
 
     .track {
@@ -75,7 +74,7 @@ $accent-color: #3b82f6;
     .delay-indicator {
         margin-top: auto !important;
     }
-    
+
     .tooltip-container .delay-indicator {
         margin: auto;
         visibility: visible !important;
@@ -87,7 +86,7 @@ $accent-color: #3b82f6;
         i {
             font-size: 3em !important;
         }
-    
+
         p {
             font-size: 1.3em;
         }
@@ -108,13 +107,14 @@ $accent-color: #3b82f6;
         z-index: 50;
     }
 
-    #searchBox, #resultsContainer {
+    #searchBox,
+    #resultsContainer {
         font-size: 1.7em !important;
     }
 }
 
 @media (min-width: 769px) {
-    
+
     body {
         display: flex;
         background-color: white !important;
@@ -139,10 +139,11 @@ $accent-color: #3b82f6;
         display: inline-block;
     }
 
-    #searchBox, #resultsContainer {
+    #searchBox,
+    #resultsContainer {
         font-size: 1.2em !important;
     }
-    
+
 }
 
 .title {
@@ -150,7 +151,8 @@ $accent-color: #3b82f6;
     justify-content: center;
     margin: auto;
 
-    h1, i {
+    h1,
+    i {
         margin: auto 1vh;
     }
 
@@ -161,8 +163,8 @@ $accent-color: #3b82f6;
 
         &:hover {
             transform: scale(1.1);
+        }
     }
-}
 
 }
 
@@ -271,6 +273,7 @@ h1 {
         }
 
     }
+
     #title_time {
         font-weight: 400;
         padding-top: 0 !important;
@@ -306,7 +309,7 @@ i {
 
     body,
     html {
-    position: fixed;
+        position: fixed;
     }
 
     button {
@@ -350,9 +353,11 @@ i {
 
     position: absolute;
     z-index: 2;
-    bottom: 125%; /* Position the tooltip above the icon */
+    bottom: 125%;
+    /* Position the tooltip above the icon */
     left: 50%;
-    margin-left: -60px; /* Use half the width to center the tooltip */
+    margin-left: -60px;
+    /* Use half the width to center the tooltip */
 
     opacity: 0;
     transition: opacity 0.3s;
@@ -363,7 +368,7 @@ i {
     opacity: .7;
 }
 
-.transparent ~ .tooltip-text {
+.transparent~.tooltip-text {
     visibility: hidden !important;
     opacity: 0 !important;
 }
@@ -447,7 +452,7 @@ i {
         color: white !important;
         box-shadow: 0 0 50px rgba(169, 169, 169, 0.03) !important;
     }
-    
+
 
     .trip {
         background-color: #242429 !important;
@@ -457,8 +462,13 @@ i {
             box-shadow: 0 0 40px rgba(169, 169, 169, 0.03) !important;
         }
     }
-    
-    h1, h2, p, span, .fa-angles-down, .fa-circle-exclamation {
+
+    h1,
+    h2,
+    p,
+    span,
+    .fa-angles-down,
+    .fa-circle-exclamation {
         color: white !important;
     }
 
@@ -474,17 +484,23 @@ i {
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-  }
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
 
 
 
-  // Searchbox
+// Searchbox
 
 #searchBox,
 #resultsContainer {

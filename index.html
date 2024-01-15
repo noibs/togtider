@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Togtider</title>
     <link rel="stylesheet" href="./css/index.css">
@@ -12,7 +13,10 @@
     <link rel="icon" href="media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
     <script src="https://cdn.jsdelivr.net/npm/animejs/lib/anime.min.js"></script>
+    <link rel="preconnect" href="https://api.fonts.coollabs.io" crossorigin />
+    <link href="https://api.fonts.coollabs.io/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
 </head>
+
 <body class="noselect">
     <div class="container">
 
@@ -20,87 +24,90 @@
             <i class="fa-solid fa-train-subway" onclick=""></i>
             <h1 id="swap">Togtider</h1>
         </div>
-        
+
         <div id="tripsContainer" class="tripsContainer">
 
-        <div class="trip-desktop trip ${index + 1} delete">
-            <div class="title_time">
-                <h2 class="station origin-station">Station...</h2>
-                <span>
-                    <span class="delay-indicator">+2</span>
-                    <i class="fa-regular fa-clock transparent"></i>
-                    <h2 id="title_time">...</h2>
-                </span>
-            </div>
-            <p class="track">Spor: ...</p>
-
-            <div class="arrow_text">
-                <i class="fa-solid fa-angles-down"></i>
-                <div class="multipleStops hidden">
-                    <i class="fa-regular fa-circle-exclamation"></i>
-                    <p class=""> Ruten indeholder flere skift.</p>
+            <div class="trip-desktop trip ${index + 1} delete">
+                <div class="title_time">
+                    <h2 class="station origin-station">Station...</h2>
+                    <span>
+                        <span class="delay-indicator">+2</span>
+                        <i class="fa-regular fa-clock transparent"></i>
+                        <h2 id="title_time">...</h2>
+                    </span>
                 </div>
+                <p class="track">Spor: ...</p>
+
+                <div class="arrow_text">
+                    <i class="fa-solid fa-angles-down"></i>
+                    <div class="multipleStops hidden">
+                        <i class="fa-regular fa-circle-exclamation"></i>
+                        <p class=""> Ruten indeholder flere skift.</p>
+                    </div>
+                </div>
+
+                <div class="title_time">
+                    <h2 class="station destination-station">Station...</h2>
+                    <h2 id="title_time">...</h2>
+                </div>
+                <p class="track">Spor: ...</p>
             </div>
 
-            <div class="title_time">
-                <h2 class="station destination-station">Station...</h2>
-                <h2 id="title_time">...</h2>
+            <div class="trip-desktop trip ${index + 1} delete">
+                <div class="title_time">
+                    <h2 class="station">Station...</h2>
+                    <h2 id="title_time">...</h2>
+                </div>
+                <p class="track">Spor: ...</p>
+
+                <i class="fa-solid fa-angles-down"></i>
+
+                <div class="title_time">
+                    <h2 class="station">Station...</h2>
+                    <h2 id="title_time">...</h2>
+                </div>
+                <p class="track">Spor: ...</p>
             </div>
-            <p class="track">Spor: ...</p>
+
+            <div class="trip-desktop trip ${index + 1} delete">
+                <div class="title_time">
+                    <h2 class="station">Station...</h2>
+                    <h2 id="title_time">...</h2>
+                </div>
+                <p class="track">Spor: ...</p>
+                <i class="fa-solid fa-angles-down"></i>
+                <div class="title_time">
+                    <h2 class="station">Station...</h2>
+                    <h2 id="title_time">...</h2>
+                </div>
+                <p class="track">Spor: ...</p>
+            </div>
+
         </div>
 
-        <div class="trip-desktop trip ${index + 1} delete">
-            <div class="title_time">
-                <h2 class="station">Station...</h2>
-                <h2 id="title_time">...</h2>
-            </div>
-            <p class="track">Spor: ...</p>
-
-            <i class="fa-solid fa-angles-down"></i>
-
-            <div class="title_time">
-                <h2 class="station">Station...</h2>
-                <h2 id="title_time">...</h2>
-            </div>
-            <p class="track">Spor: ...</p>
+        <div class="refresh">
+            <button id="refresh" class="refreshBtn"><i class="fas fa-sync-alt"></i></button>
         </div>
 
-        <div class="trip-desktop trip ${index + 1} delete">
-            <div class="title_time">
-                <h2 class="station">Station...</h2>
-                <h2 id="title_time">...</h2>
-            </div>
-            <p class="track">Spor: ...</p>
-            <i class="fa-solid fa-angles-down"></i>
-            <div class="title_time">
-                <h2 class="station">Station...</h2>
-                <h2 id="title_time">...</h2>
-            </div>
-            <p class="track">Spor: ...</p>
-        </div>
-
-        </div>
-
-            <div class="refresh">
-                <button id="refresh" class="refreshBtn"><i class="fas fa-sync-alt"></i></button>
-            </div>
-            
         <div class="warning warning-desktop hidden">
             <i class="fa-regular fa-triangle-exclamation"></i> <br>
-            <p>Der vises færre resultater end normalt.<br id="extra-break"><br>Dobbelttjek Rejseplanen før du rejser.</p>
+            <p>Der vises færre resultater end normalt.<br id="extra-break"><br>Dobbelttjek Rejseplanen før du rejser.
+            </p>
         </div>
-        
+
     </div>
 
     <div class="warning-mobile container warning-container hidden">
         <div class="warning">
             <i class="fa-regular fa-triangle-exclamation"></i> <br>
-            <p>Der vises færre resultater end normalt.<br id="extra-break"><br>Dobbelttjek Rejseplanen før du rejser.</p>
+            <p>Der vises færre resultater end normalt.<br id="extra-break"><br>Dobbelttjek Rejseplanen før du rejser.
+            </p>
         </div>
     </div>
-    
+
     <!--Load scripts-->
     <script src="js/handler.js" type="module"></script>
     <script src="js/anims.js"></script>
 </body>
+
 </html>
